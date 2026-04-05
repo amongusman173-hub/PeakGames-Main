@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Peak Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="nav-logo">Peak Games</a>
+            </div>
+            <div class="nav-links">
+                <a href="games.html" class="active">Games</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#privacy">Privacy</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="games-page">
+        <div class="container">
+            <h2 class="section-title">Our Games</h2>
+
+            <div class="search-container">
+                <div class="search-bar">
+                    <div class="search-input-wrapper">
+                        <input type="text" id="gameSearch" placeholder="Search games..." class="search-input">
+                        <div class="search-icon">🔍</div>
+                    </div>
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">All Games</button>
+                    <button class="category-btn" data-category="casino">Casino</button>
+                    <button class="category-btn" data-category="action">Action</button>
+                    <button class="category-btn" data-category="strategy">Strategy</button>
+                    <button class="category-btn" data-category="adventure">Adventure</button>
+                </div>
+
+                <div class="search-results-info">
+                    <span id="resultsCount">2 games found</span>
+                    <button id="clearSearch" class="clear-search" style="display: none;">Clear Search</button>
+                </div>
+            </div>
+
+            <div class="games-grid">
+                <div class="game-card" data-category="casino strategy" data-title="Lucky" data-description="casino experience featuring multiple games including dice mines roulette stocks slots">
+                    <div class="game-preview">
+                        <iframe src="https://amongusman173-hub.github.io/PeakGames-Lucky/"
+                                title="Lucky Preview"
+                                loading="lazy"></iframe>
+                    </div>
+                    <div class="game-info">
+                        <h3>Lucky</h3>
+                        <p>A comprehensive casino experience featuring multiple games including dice, mines, roulette, stocks, slots, and more. Test your luck with various betting strategies and risk levels.</p>
+                        <div class="game-features">
+                            <span class="feature-tag">Casino</span>
+                            <span class="feature-tag">Strategy</span>
+                        </div>
+                        <div class="game-actions">
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/"
+                               target="_blank"
+                               class="btn-play">Play Now</a>
+                            <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card" data-category="action adventure" data-title="Roguelite Arena" data-description="roguelite adventure where every run is unique battle through procedurally generated levels">
+                    <div class="game-preview">
+                        <iframe src="https://amongusman173-hub.github.io/PeakGames-Roguelite/"
+                                title="Roguelite Arena Preview"
+                                loading="lazy"></iframe>
+                    </div>
+                    <div class="game-info">
+                        <h3>Roguelite Arena</h3>
+                        <p>An exciting roguelite adventure where every run is unique. Battle through procedurally generated levels, collect powerful upgrades, and test your skills against challenging enemies.</p>
+                        <div class="game-features">
+                            <span class="feature-tag">Roguelite</span>
+                            <span class="feature-tag">Action</span>
+                            <span class="feature-tag">Adventure</span>
+                        </div>
+                        <div class="game-actions">
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Roguelite/"
+                               target="_blank"
+                               class="btn-play">Play Now</a>
+                            <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Peak Games</h3>
+                    <p>Premium Gaming Experience</p>
+                </div>
+                <div class="footer-links">
+                    <a href="games.html">Games</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#privacy">Privacy</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Peak Games. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href.startsWith('#') && !href.startsWith('http') && !link.target) {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => window.location.href = href, 300);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
