@@ -920,7 +920,8 @@ function updateMinigame(dt){
   // ice rod: zone falls 50% slower
   const iceMult = rod.ability==='ice' ? 0.5 : 1.0;
   // Direct position control — no slippery physics
-  if(mg.holding){
+  const spaceHeld = keys[' '] || keys['Space'];
+  if(mg.holding || spaceHeld){
     mg.zonePos=Math.max(mg.zoneSize/2, mg.zonePos - dt*0.85);
   } else {
     mg.zonePos=Math.min(1-mg.zoneSize/2, mg.zonePos + dt*1.9*fallSpeed*iceMult);
@@ -1705,7 +1706,7 @@ function drawFishing(){
   }
 
   // Reeling phase
-  const bH=300,bW=42,bX=cx-bW/2,bY=cy-bH/2;
+  const bH=340,bW=42,bX=cx-bW/2,bY=cy-bH/2;
   const panW=310,panH=430;
   ctx.fillStyle='rgba(6,10,6,0.97)';
   ctx.beginPath(); ctx.roundRect(cx-panW/2,cy-panH/2,panW,panH,16); ctx.fill();
@@ -1754,7 +1755,7 @@ function drawFishing(){
   ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='9px sans-serif'; ctx.textAlign='left';
   ctx.fillText('CATCH',pX-42,p1Y+7); ctx.fillText('ESCAPE',pX-46,p2Y+7);
   ctx.fillStyle='rgba(255,255,255,0.18)'; ctx.font='11px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Hold to move zone UP',cx,cy+panH/2-28);
+  ctx.fillText('Hold / Space to move zone UP',cx,cy+panH/2-28);
   ctx.fillStyle='rgba(255,255,255,0.1)'; ctx.font='10px sans-serif';
   ctx.fillText('[Esc] Cancel',cx,cy+panH/2-12);
 
