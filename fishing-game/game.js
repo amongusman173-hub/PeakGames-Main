@@ -2437,7 +2437,7 @@ function loop(ts){
 
   // Auto-save every 30s
   autoSaveTimer+=dt;
-  if(autoSaveTimer>=30){ autoSaveTimer=0; saveGame(); }
+  if(autoSaveTimer>=60){ autoSaveTimer=0; saveGame(); }
 
   if(!state.paused && !state.mainMenu) updateVFX(dt);
   if(!state.paused && !state.mainMenu){
