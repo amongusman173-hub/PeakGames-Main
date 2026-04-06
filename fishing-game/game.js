@@ -503,12 +503,13 @@ window.addEventListener('keydown', e=>{
   }
   // Tutorial advance — Space skips/advances, handled before any preventDefault
   if(e.key===' '){
+    if(state.screen==='fishing' && mg.phase==='reeling'){ keys[' ']=true; e.preventDefault(); return; }
     if(tutorial.active&&!tutorial.done){ advanceTutorial(); e.preventDefault(); return; }
   }
   const gameKeys=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','a','A','s','S','d','D','w','W','e','E','k','K','i','I','c','C','Escape'];
   if(gameKeys.includes(e.key)) e.preventDefault();
 });
-window.addEventListener('keyup', e=>{ keys[e.key]=false; if(e.key==='Control') ctrlHeld=false; });
+window.addEventListener('keyup', e=>{ keys[e.key]=false; if(e.key===' ') keys[' ']=false; if(e.key==='Control') ctrlHeld=false; });
 window.addEventListener('blur', clearKeys);
 document.addEventListener('visibilitychange', ()=>{ if(document.hidden) clearKeys(); });
 window.addEventListener('contextmenu', e=>{
