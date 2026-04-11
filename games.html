@@ -17,6 +17,7 @@
                 <a href="games.html" class="active">Games</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#privacy">Privacy</a>
+                <button class="music-toggle" id="musicToggle" title="Toggle Music">♪</button>
             </div>
         </div>
     </nav>
@@ -42,12 +43,38 @@
                 </div>
 
                 <div class="search-results-info">
-                    <span id="resultsCount">3 games found</span>
+                    <span id="resultsCount">4 games found</span>
                     <button id="clearSearch" class="clear-search" style="display: none;">Clear Search</button>
                 </div>
             </div>
 
             <div class="games-grid">
+                <div class="game-card" data-category="strategy action" data-title="Tower Defense" data-description="tower defense strategy game build towers defend against waves of enemies">
+                    <div class="game-preview">
+                        <iframe data-src="https://amongusman173-hub.github.io/PeakGames-TowerDefense/"
+                                title="Tower Defense Preview"
+                                loading="lazy"></iframe>
+                    </div>
+                    <div class="game-info">
+                        <h3>Tower Defense</h3>
+                        <p>Build and upgrade towers to defend against endless waves of enemies. Plan your strategy, manage resources, and survive as long as you can.</p>
+                        <div class="game-features">
+                            <span class="feature-tag">Strategy</span>
+                            <span class="feature-tag">Action</span>
+                            <span class="feature-tag">Tower Defense</span>
+                        </div>
+                        <div class="game-actions">
+                            <a href="https://amongusman173-hub.github.io/PeakGames-TowerDefense/"
+                               target="_blank"
+                               class="btn-play">Play Now</a>
+                            <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-TowerDefense"
+                               target="_blank"
+                               class="btn-source">Source</a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="game-card" data-category="casino strategy" data-title="Lucky" data-description="casino experience featuring multiple games including dice mines roulette stocks slots">
                     <div class="game-preview">
                         <iframe data-src="https://amongusman173-hub.github.io/PeakGames-Lucky/"
@@ -148,17 +175,5 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('a[href]').forEach(link => {
-            const href = link.getAttribute('href');
-            if (!href.startsWith('#') && !href.startsWith('http') && !link.target) {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    document.body.classList.add('fade-out');
-                    setTimeout(() => window.location.href = href, 300);
-                });
-            }
-        });
-    </script>
 </body>
 </html>

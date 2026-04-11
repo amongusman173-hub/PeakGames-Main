@@ -17,6 +17,7 @@
                 <a href="games.html">Games</a>
                 <a href="#about">About</a>
                 <a href="#privacy">Privacy</a>
+                <button class="music-toggle" id="musicToggle" title="Toggle Music">♪</button>
             </div>
         </div>
     </nav>
@@ -50,7 +51,7 @@
                         <p>We're passionate about creating engaging gaming experiences that push the boundaries of web-based entertainment. Our games combine innovative mechanics with polished design to deliver unforgettable experiences.</p>
                         <div class="stats-grid">
                             <div class="stat-item">
-                                <div class="stat-number">3</div>
+                                <div class="stat-number">4</div>
                                 <div class="stat-label">Games Released</div>
                             </div>
                             <div class="stat-item">
@@ -124,17 +125,5 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        document.querySelectorAll('a[href]').forEach(link => {
-            const href = link.getAttribute('href');
-            if (!href.startsWith('#') && !href.startsWith('http') && !link.target) {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    document.body.classList.add('fade-out');
-                    setTimeout(() => window.location.href = href, 300);
-                });
-            }
-        });
-    </script>
 </body>
 </html>

@@ -859,3 +859,117 @@ body.fade-out { animation: pageFadeOut 0.3s ease forwards; }
     .category-btn { padding: 8px 14px; font-size: 0.85rem; }
     .search-results-info { flex-direction: column; gap: 0.75rem; text-align: center; }
 }
+
+/* ── Music Toggle ── */
+.music-toggle {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1.5px solid rgba(102, 126, 234, 0.3);
+    color: #a78bfa;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    animation: musicPulse 2s ease-in-out infinite;
+}
+
+.music-toggle:hover {
+    background: rgba(102, 126, 234, 0.2);
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+    transform: scale(1.1);
+}
+
+.music-toggle.muted {
+    color: #444;
+    border-color: rgba(255,255,255,0.1);
+    animation: none;
+    opacity: 0.5;
+}
+
+@keyframes musicPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.3); }
+    50%       { box-shadow: 0 0 0 6px rgba(102, 126, 234, 0); }
+}
+
+/* ── Enhanced Hero VFX ── */
+.hero-title {
+    animation: titleGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.2)); }
+    to   { filter: drop-shadow(0 0 50px rgba(167, 139, 250, 0.5)); }
+}
+
+/* ── Scanline overlay on game previews ── */
+.game-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.5;
+}
+
+.game-preview.expanded::after { opacity: 0; }
+
+/* ── Glowing section dividers ── */
+.about-section::after,
+.privacy-section::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    margin-top: 0;
+}
+
+/* ── Animated gradient border on hovered cards ── */
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.game-card:hover {
+    border-color: transparent;
+    background-image: linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03)),
+                      conic-gradient(from var(--angle), #667eea, #a78bfa, #764ba2, #667eea);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: borderSpin 3s linear infinite, cardHover 0.35s ease forwards;
+}
+
+@keyframes borderSpin {
+    to { --angle: 360deg; }
+}
+
+@keyframes cardHover {
+    to { transform: translateY(-8px); }
+}
+
+/* ── Floating orb behind section titles ── */
+.section-title {
+    position: relative;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+}
