@@ -1,0 +1,13 @@
+{
+  "name": "Auto Backup on Save",
+  "version": "1.0.0",
+  "description": "Automatically creates a backup when files are saved",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["game.js", "index.html", "style.css"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "./backup.sh"
+  }
+}
