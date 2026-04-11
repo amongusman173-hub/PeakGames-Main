@@ -935,27 +935,10 @@ body.fade-out { animation: pageFadeOut 0.3s ease forwards; }
 }
 
 /* ── Animated gradient border on hovered cards ── */
-@property --angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-}
-
 .game-card:hover {
-    border-color: transparent;
-    background-image: linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03)),
-                      conic-gradient(from var(--angle), #667eea, #a78bfa, #764ba2, #667eea);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: borderSpin 3s linear infinite, cardHover 0.35s ease forwards;
-}
-
-@keyframes borderSpin {
-    to { --angle: 360deg; }
-}
-
-@keyframes cardHover {
-    to { transform: translateY(-8px); }
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(102, 126, 234, 0.3), 0 0 40px rgba(102, 126, 234, 0.08);
+    border-color: rgba(102, 126, 234, 0.3);
 }
 
 /* ── Floating orb behind section titles ── */

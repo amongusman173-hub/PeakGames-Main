@@ -1,43 +1,56 @@
-// ── Click sound ──
+// ── Audio setup ──
 const clickSound = new Audio('sounds/buttonclick.mp3');
 clickSound.volume = 0.4;
 
-function playClick() {
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {});
-}
-
-document.addEventListener('click', (e) => {
-    if (e.target.matches('a, button, .category-btn, .btn-play, .btn-preview, .btn-source, .nav-logo, .nav-links a')) {
-        playClick();
-    }
-});
-
-// ── Background music (starts on first user interaction) ──
 const bgMusic = new Audio('sounds/backroundmusic.mp3');
 bgMusic.loop = true;
 bgMusic.volume = 0.15;
 
+// Persist music mute state across pages
+const isMuted = sessionStorage.getItem('musicMuted') === 'true';
+if (isMuted) bgMusic.volume = 0;
+
+// Try to resume music immediately (works if user already interacted on a previous page)
+bgMusic.play().catch(() => {});
+
+// First interaction fallback
 let musicStarted = false;
 document.addEventListener('click', () => {
     if (!musicStarted) {
         bgMusic.play().catch(() => {});
         musicStarted = true;
     }
-}, { once: false });
+});
 
-// Music toggle button
+function playClick() {
+    if (sessionStorage.getItem('musicMuted') !== 'true') {
+        clickSound.currentTime = 0;
+        clickSound.play().catch(() => {});
+    }
+}
+
+document.addEventListener('click', (e) => {
+    if (e.target.closest('a, button')) playClick();
+});
+
+// Music toggle
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('musicToggle');
     if (!btn) return;
+
+    // Reflect current state
+    if (isMuted) btn.classList.add('muted');
+
     btn.addEventListener('click', () => {
-        if (bgMusic.paused) {
+        const muted = sessionStorage.getItem('musicMuted') === 'true';
+        if (muted) {
+            bgMusic.volume = 0.15;
             bgMusic.play().catch(() => {});
-            btn.textContent = '♪';
+            sessionStorage.setItem('musicMuted', 'false');
             btn.classList.remove('muted');
         } else {
-            bgMusic.pause();
-            btn.textContent = '♪';
+            bgMusic.volume = 0;
+            sessionStorage.setItem('musicMuted', 'true');
             btn.classList.add('muted');
         }
     });
@@ -53,34 +66,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ── Preview toggle ──
-// Iframes only load when preview is opened — prevents game audio playing in background
 function togglePreview(event) {
-    playClick();
     const gameCard = event.target.closest('.game-card');
     const preview = gameCard.querySelector('.game-preview');
     const iframe = preview.querySelector('iframe');
     const button = event.target;
 
     if (preview.classList.contains('expanded')) {
-        // Collapse — blank the src to kill all game audio immediately
         preview.classList.remove('expanded');
         button.textContent = 'Preview';
+        // Kill game audio by blanking src, then restore thumbnail
         iframe.src = 'about:blank';
         iframe.style.pointerEvents = 'none';
         gameCard.classList.remove('previewing');
+        // Reload thumbnail after a short delay
+        setTimeout(() => { iframe.src = iframe.dataset.src; }, 100);
     } else {
-        // Close any other open previews first, killing their audio
+        // Close others first
         document.querySelectorAll('.game-preview.expanded').forEach(p => {
             p.classList.remove('expanded');
-            const otherIframe = p.querySelector('iframe');
-            const otherButton = p.parentElement.querySelector('.btn-preview');
-            otherIframe.src = 'about:blank';
-            otherIframe.style.pointerEvents = 'none';
-            otherButton.textContent = 'Preview';
+            const oi = p.querySelector('iframe');
+            const ob = p.parentElement.querySelector('.btn-preview');
+            oi.src = 'about:blank';
+            oi.style.pointerEvents = 'none';
+            ob.textContent = 'Preview';
             p.closest('.game-card').classList.remove('previewing');
+            setTimeout(() => { oi.src = oi.dataset.src; }, 100);
         });
 
-        // Open — now load the game
         preview.classList.add('expanded');
         button.textContent = 'Close Preview';
         iframe.src = iframe.dataset.src;
@@ -89,26 +102,31 @@ function togglePreview(event) {
     }
 }
 
+// ── Load thumbnails on page load ──
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.game-preview iframe[data-src]').forEach(iframe => {
+        iframe.src = iframe.dataset.src;
+    });
+});
+
 // ── Navbar scroll effect ──
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(7, 7, 15, 0.98)';
-    } else {
-        navbar.style.background = 'rgba(7, 7, 15, 0.85)';
-    }
+    navbar.style.background = window.scrollY > 50
+        ? 'rgba(7, 7, 15, 0.98)'
+        : 'rgba(7, 7, 15, 0.85)';
 });
 
 // ── Search & filter ──
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('gameSearch');
+    if (!searchInput) return;
+
     const categoryButtons = document.querySelectorAll('.category-btn');
     const gameCards = document.querySelectorAll('.game-card');
     const resultsCount = document.getElementById('resultsCount');
     const clearSearch = document.getElementById('clearSearch');
-
-    if (!searchInput) return;
 
     let currentCategory = 'all';
     let currentSearch = '';
@@ -117,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.display = 'block';
         card.style.opacity = '1';
         card.style.transform = 'translateY(0)';
-        card.style.transition = 'all 0.3s ease';
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     });
 
     searchInput.addEventListener('input', (e) => {
@@ -149,12 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let visibleCount = 0;
         gameCards.forEach(card => {
             const title = card.dataset.title.toLowerCase();
-            const description = card.dataset.description.toLowerCase();
-            const categories = card.dataset.category.toLowerCase();
-            const searchMatch = currentSearch === '' || title.includes(currentSearch) || description.includes(currentSearch) || categories.includes(currentSearch);
-            const categoryMatch = currentCategory === 'all' || categories.includes(currentCategory);
+            const desc = card.dataset.description.toLowerCase();
+            const cats = card.dataset.category.toLowerCase();
+            const match = (currentSearch === '' || title.includes(currentSearch) || desc.includes(currentSearch) || cats.includes(currentSearch))
+                       && (currentCategory === 'all' || cats.includes(currentCategory));
 
-            if (searchMatch && categoryMatch) {
+            if (match) {
                 card.style.display = 'block';
                 card.offsetHeight;
                 card.style.opacity = '1';
@@ -166,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => { if (card.style.opacity === '0') card.style.display = 'none'; }, 300);
             }
         });
-
         resultsCount.textContent = `${visibleCount} game${visibleCount !== 1 ? 's' : ''} found`;
         showNoResults(visibleCount === 0);
     }
@@ -182,18 +199,36 @@ document.addEventListener('DOMContentLoaded', () => {
             msg.className = 'no-results-message';
             msg.innerHTML = `<div class="no-results-icon">🎮</div><h3>No games found</h3><p>Try a different search or category</p>`;
             document.querySelector('.games-grid').appendChild(msg);
-        } else if (!show && msg) {
-            msg.remove();
-        }
+        } else if (!show && msg) msg.remove();
     }
 
     filterGames();
 });
 
+// ── Card tilt VFX ──
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            if (card.classList.contains('previewing')) return;
+            const rect = card.getBoundingClientRect();
+            const rotateX = (((e.clientY - rect.top) / rect.height) - 0.5) * -6;
+            const rotateY = (((e.clientX - rect.left) / rect.width) - 0.5) * 6;
+            card.style.transform = `translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.5s ease';
+            card.style.transform = '';
+        });
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'transform 0.12s ease';
+        });
+    });
+});
+
 // ── Page transitions ──
 document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
-    if (!href.startsWith('#') && !href.startsWith('http') && !link.target) {
+    if (href && !href.startsWith('#') && !href.startsWith('http') && !link.target) {
         link.addEventListener('click', e => {
             e.preventDefault();
             document.body.classList.add('fade-out');
@@ -201,84 +236,3 @@ document.querySelectorAll('a[href]').forEach(link => {
         });
     }
 });
-
-// ── Cursor glow VFX ──
-const cursorGlow = document.createElement('div');
-cursorGlow.className = 'cursor-glow';
-document.body.appendChild(cursorGlow);
-
-document.addEventListener('mousemove', (e) => {
-    cursorGlow.style.left = e.clientX + 'px';
-    cursorGlow.style.top = e.clientY + 'px';
-});
-
-// ── Card tilt VFX ──
-document.querySelectorAll('.game-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const cx = rect.width / 2;
-        const cy = rect.height / 2;
-        const rotateX = ((y - cy) / cy) * -4;
-        const rotateY = ((x - cx) / cx) * 4;
-        card.style.transform = `translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-        card.style.transition = 'transform 0.5s ease';
-    });
-
-    card.addEventListener('mouseenter', () => {
-        card.style.transition = 'transform 0.1s ease';
-    });
-});
-
-// ── Loader styles injected ──
-const loaderStyles = `
-.cursor-glow {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    transition: left 0.08s ease, top 0.08s ease;
-}
-
-.game-card.previewing {
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.5), 0 30px 60px rgba(0,0,0,0.6), 0 0 60px rgba(102, 126, 234, 0.12) !important;
-    border-color: rgba(102, 126, 234, 0.4) !important;
-}
-
-.iframe-loader {
-    position: absolute;
-    inset: 0;
-    background: #0d0d1a;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    gap: 1rem;
-}
-
-.iframe-loader p { color: #444; font-size: 0.85rem; }
-
-.spinner {
-    width: 36px; height: 36px;
-    border: 2.5px solid rgba(102, 126, 234, 0.2);
-    border-top: 2.5px solid #667eea;
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-`;
-
-const styleEl = document.createElement('style');
-styleEl.textContent = loaderStyles;
-document.head.appendChild(styleEl);
