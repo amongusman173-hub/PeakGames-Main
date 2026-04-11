@@ -70,44 +70,45 @@ function togglePreview(event) {
     const gameCard = event.target.closest('.game-card');
     const preview = gameCard.querySelector('.game-preview');
     const iframe = preview.querySelector('iframe');
+    const thumb = preview.querySelector('.preview-thumb');
+    const overlay = preview.querySelector('.preview-overlay');
     const button = event.target;
 
     if (preview.classList.contains('expanded')) {
+        // Collapse — kill iframe completely to stop all audio
         preview.classList.remove('expanded');
         button.textContent = 'Preview';
-        // Kill game audio by blanking src, then restore thumbnail
         iframe.src = 'about:blank';
-        iframe.style.pointerEvents = 'none';
+        iframe.style.display = 'none';
+        if (thumb) thumb.style.display = 'block';
+        if (overlay) overlay.style.display = 'flex';
         gameCard.classList.remove('previewing');
-        // Reload thumbnail after a short delay
-        setTimeout(() => { iframe.src = iframe.dataset.src; }, 100);
     } else {
         // Close others first
         document.querySelectorAll('.game-preview.expanded').forEach(p => {
             p.classList.remove('expanded');
             const oi = p.querySelector('iframe');
+            const ot = p.querySelector('.preview-thumb');
+            const oo = p.querySelector('.preview-overlay');
             const ob = p.parentElement.querySelector('.btn-preview');
             oi.src = 'about:blank';
-            oi.style.pointerEvents = 'none';
+            oi.style.display = 'none';
+            if (ot) ot.style.display = 'block';
+            if (oo) oo.style.display = 'flex';
             ob.textContent = 'Preview';
             p.closest('.game-card').classList.remove('previewing');
-            setTimeout(() => { oi.src = oi.dataset.src; }, 100);
         });
 
+        // Expand — load iframe now
         preview.classList.add('expanded');
         button.textContent = 'Close Preview';
-        iframe.src = iframe.dataset.src;
-        iframe.style.pointerEvents = 'auto';
+        if (thumb) thumb.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
+        iframe.style.display = 'block';
+        iframe.src = preview.dataset.src;
         gameCard.classList.add('previewing');
     }
 }
-
-// ── Load thumbnails on page load ──
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.game-preview iframe[data-src]').forEach(iframe => {
-        iframe.src = iframe.dataset.src;
-    });
-});
 
 // ── Navbar scroll effect ──
 window.addEventListener('scroll', () => {
