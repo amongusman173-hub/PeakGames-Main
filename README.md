@@ -1,22 +1,36 @@
 # Peak Games
 
-A free browser-based gaming website hosting a collection of original games. No installs, no accounts, no tracking.
+Official website for the Peak Games series — a collection of free browser-based games.
+
+🌐 **Live Site:** https://amongusman173-hub.github.io/PeakGames-Main/
 
 ## Games
 
-**Lucky** — A casino experience with dice, mines, roulette, stocks, slots, and more. For entertainment only, no real money.
+| Game | Genre | Play | Source |
+|------|-------|------|--------|
+| **Lucky** | Casino, Strategy | [Play](https://amongusman173-hub.github.io/PeakGames-Lucky/) | [Repo](https://github.com/amongusman173-hub/PeakGames-Lucky) |
+| **Fishin Time** | Adventure, Chill | [Play](https://amongusman173-hub.github.io/PeakGames-Fishin/) | [Repo](https://github.com/amongusman173-hub/PeakGames-Fishin) |
+| **Roguelite Arena** | Action, Adventure | [Play](https://amongusman173-hub.github.io/PeakGames-Roguelite/) | [Repo](https://github.com/amongusman173-hub/PeakGames-Roguelite) |
+| **Tower Defense** | Strategy, Action | [Play](https://amongusman173-hub.github.io/PeakGames-TowerDefense/) | [Repo](https://github.com/amongusman173-hub/PeakGames-TowerDefense) |
 
-**Fishin Time** — A chill fishing RPG. Cast your line, explore biomes, and reel in rare fish.
+## Features
 
-**Roguelite Arena** — A roguelite where every run is unique. Battle through procedurally generated levels and collect upgrades.
+- Game search and category filtering
+- Live in-page game previews (non-interactive thumbnail, expands to full interactive)
+- Background music with mute toggle
+- Click sound effects
+- Smooth page transitions
+- Privacy policy
 
-## Live Site
+## Stack
 
-[amongusman173-hub.github.io/PeakGames-Main](https://amongusman173-hub.github.io/PeakGames-Main)
+HTML, CSS, JavaScript — no frameworks, no dependencies.
 
-## Privacy
+## Pages
 
-- No personal data collected
-- All game progress saved locally in your browser
-- No cookies or analytics
-- Fully open source
+- `index.html` — Home, about, privacy policy
+- `games.html` — Game library with search and filters
+
+## Deploy
+
+Set GitHub Pages source to the root of this repo on the `main` branch.
