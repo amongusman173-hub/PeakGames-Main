@@ -12,6 +12,8 @@ Official website for the Peak Games series — a collection of free browser-base
 | **Fishin Time** | Adventure, Chill | [Play](https://amongusman173-hub.github.io/PeakGames-Fishin/) | [Repo](https://github.com/amongusman173-hub/PeakGames-Fishin) |
 | **Roguelite Arena** | Action, Adventure | [Play](https://amongusman173-hub.github.io/PeakGames-Roguelite/) | [Repo](https://github.com/amongusman173-hub/PeakGames-Roguelite) |
 | **Tower Defense** | Strategy, Action | [Play](https://amongusman173-hub.github.io/PeakGames-TowerDefense/) | [Repo](https://github.com/amongusman173-hub/PeakGames-TowerDefense) |
+| **Untitled Incremental** | Incremental, Idle, Strategy | [Play](https://amongusman173-hub.github.io/PeakGames-Incremental/) | [Repo](https://github.com/amongusman173-hub/PeakGames-Incremental) |
+| **Minefield** | Action, Strategy, Survival | [Play](https://amongusman173-hub.github.io/PeakGames-MineField/) | [Repo](https://github.com/amongusman173-hub/PeakGames-MineField) |
 
 ## Features
 
