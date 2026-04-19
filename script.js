@@ -75,7 +75,6 @@ function togglePreview(event) {
     const button = event.target;
 
     if (preview.classList.contains('expanded')) {
-        // Collapse — kill iframe completely to stop all audio
         preview.classList.remove('expanded');
         button.textContent = 'Preview';
         iframe.src = 'about:blank';
@@ -83,6 +82,9 @@ function togglePreview(event) {
         if (thumb) thumb.style.display = 'block';
         if (overlay) overlay.style.display = 'flex';
         gameCard.classList.remove('previewing');
+        // Remove loader if present
+        const loader = preview.querySelector('.preview-loader');
+        if (loader) loader.remove();
     } else {
         // Close others first
         document.querySelectorAll('.game-preview.expanded').forEach(p => {
@@ -91,22 +93,49 @@ function togglePreview(event) {
             const ot = p.querySelector('.preview-thumb');
             const oo = p.querySelector('.preview-overlay');
             const ob = p.parentElement.querySelector('.btn-preview');
+            const ol = p.querySelector('.preview-loader');
             oi.src = 'about:blank';
             oi.style.display = 'none';
             if (ot) ot.style.display = 'block';
             if (oo) oo.style.display = 'flex';
+            if (ol) ol.remove();
             ob.textContent = 'Preview';
             p.closest('.game-card').classList.remove('previewing');
         });
 
-        // Expand — load iframe now
+        // Show loader while iframe loads
         preview.classList.add('expanded');
         button.textContent = 'Close Preview';
         if (thumb) thumb.style.display = 'none';
         if (overlay) overlay.style.display = 'none';
-        iframe.style.display = 'block';
-        iframe.src = preview.dataset.src;
         gameCard.classList.add('previewing');
+
+        // Inject loading screen
+        const loader = document.createElement('div');
+        loader.className = 'preview-loader';
+        loader.innerHTML = `
+            <div class="loader-inner">
+                <div class="loader-ring"></div>
+                <div class="loader-ring loader-ring-2"></div>
+                <div class="loader-dots">
+                    <span></span><span></span><span></span>
+                </div>
+                <p class="loader-text">Loading game...</p>
+            </div>
+        `;
+        preview.appendChild(loader);
+
+        iframe.style.display = 'block';
+        iframe.style.opacity = '0';
+        iframe.src = preview.dataset.src;
+
+        // Fade in iframe once loaded, remove loader
+        iframe.onload = () => {
+            loader.classList.add('loader-fade-out');
+            iframe.style.transition = 'opacity 0.4s ease';
+            iframe.style.opacity = '1';
+            setTimeout(() => loader.remove(), 400);
+        };
     }
 }
 
@@ -132,11 +161,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentCategory = 'all';
     let currentSearch = '';
 
-    gameCards.forEach(card => {
-        card.style.display = 'block';
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    // Staggered entrance animation on load
+    gameCards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(28px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 80 + i * 80);
     });
 
     searchInput.addEventListener('input', (e) => {

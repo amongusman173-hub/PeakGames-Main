@@ -200,7 +200,9 @@ body {
 
 .section-title {
     text-align: center; font-size: 2.8rem; font-weight: 800;
-    color: #fff; letter-spacing: -0.02em; margin-bottom: 2.5rem;
+    letter-spacing: -0.02em; margin-bottom: 2.5rem;
+    background: linear-gradient(135deg, #fff 40%, #a78bfa 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
 /* ── Search & Filters ── */
@@ -814,4 +816,122 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
     .strip-grid { grid-template-columns: repeat(2, 1fr); }
     .hero-title { font-size: 3.5rem; }
     .hero-actions { flex-direction: column; }
+}
+
+/* ── Preview Loader ── */
+.preview-loader {
+    position: absolute; inset: 0; z-index: 20;
+    background: #08081a;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.4s ease;
+}
+
+.preview-loader.loader-fade-out { opacity: 0; pointer-events: none; }
+
+.loader-inner {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 1.2rem;
+    position: relative;
+}
+
+/* Dual spinning rings */
+.loader-ring {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-top-color: var(--purple);
+    border-right-color: rgba(102,126,234,0.2);
+    animation: ringSpinA 1s linear infinite;
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+}
+
+.loader-ring-2 {
+    width: 38px; height: 38px;
+    border-top-color: var(--violet);
+    border-right-color: rgba(167,139,250,0.15);
+    animation: ringSpinB 0.75s linear infinite reverse;
+    top: 7px; left: 50%; transform: translateX(-50%);
+}
+
+@keyframes ringSpinA { to { transform: translateX(-50%) rotate(360deg); } }
+@keyframes ringSpinB { to { transform: translateX(-50%) rotate(360deg); } }
+
+/* Dots */
+.loader-dots {
+    display: flex; gap: 6px; margin-top: 68px;
+}
+
+.loader-dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--purple); opacity: 0.3;
+    animation: dotPulse 1.2s ease-in-out infinite;
+}
+
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.2); background: var(--violet); }
+}
+
+.loader-text {
+    color: #444; font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    animation: loaderTextPulse 2s ease-in-out infinite;
+}
+
+@keyframes loaderTextPulse {
+    0%,100% { opacity: 0.4; }
+    50%      { opacity: 0.8; }
+}
+
+/* ── Card entrance animation ── */
+.game-card {
+    will-change: transform, opacity;
+}
+
+/* ── Games page header polish ── */
+.games-page-header {
+    text-align: center; margin-bottom: 0.5rem;
+}
+
+.section-title {
+    background: linear-gradient(135deg, #fff 40%, #a78bfa 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ── Previewing card glow ── */
+.game-card.previewing {
+    box-shadow: 0 0 0 1px rgba(102,126,234,0.4),
+                0 30px 60px rgba(0,0,0,0.6),
+                0 0 50px rgba(102,126,234,0.1) !important;
+    border-color: rgba(102,126,234,0.35) !important;
+}
+
+/* ── Search input glow on type ── */
+.search-input:not(:placeholder-shown) {
+    border-color: rgba(102,126,234,0.4);
+    background: rgba(102,126,234,0.04);
+}
+
+/* ── Category btn count badge ── */
+.category-btn.active::after {
+    content: '';
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* ── Results count pulse on change ── */
+#resultsCount {
+    transition: opacity 0.2s ease;
+}
+
+/* ── Smooth preview expand ── */
+.game-preview {
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
