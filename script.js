@@ -157,13 +157,19 @@ function togglePreview(event) {
     }
 }
 
-// ── Navbar scroll effect ──
+// ── Scroll progress bar ──
 window.addEventListener('scroll', () => {
+    const bar = document.getElementById('scrollProgress');
+    if (bar) {
+        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        bar.style.width = pct + '%';
+    }
     const navbar = document.querySelector('.navbar');
-    if (!navbar) return;
-    navbar.style.background = window.scrollY > 50
-        ? 'rgba(7, 7, 15, 0.98)'
-        : 'rgba(7, 7, 15, 0.85)';
+    if (navbar) {
+        navbar.style.background = window.scrollY > 50
+            ? 'rgba(6,6,14,0.98)'
+            : 'rgba(6,6,14,0.8)';
+    }
 });
 
 // ── Page loader ──
@@ -294,7 +300,114 @@ document.addEventListener('DOMContentLoaded', () => {
     filterGames();
 });
 
-// ── Card tilt VFX ──
+// ── Confetti on Play Now ──
+function launchConfetti(x, y) {
+    const colors = ['#667eea','#a78bfa','#c084fc','#f59e0b','#10b981','#fff'];
+    for (let i = 0; i < 28; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+        el.style.cssText = `
+            left:${x}px; top:${y}px;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+            transform:rotate(${Math.random()*360}deg);
+            width:${6+Math.random()*6}px;
+            height:${6+Math.random()*6}px;
+            border-radius:${Math.random()>0.5?'50%':'2px'};
+        `;
+        document.body.appendChild(el);
+        const angle = (Math.random() * 360) * (Math.PI/180);
+        const dist = 80 + Math.random() * 120;
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist - 60;
+        el.animate([
+            { transform: `translate(0,0) rotate(0deg) scale(1)`, opacity: 1 },
+            { transform: `translate(${tx}px,${ty}px) rotate(${Math.random()*720}deg) scale(0)`, opacity: 0 }
+        ], { duration: 700 + Math.random()*400, easing: 'cubic-bezier(0,0.9,0.57,1)', fill: 'forwards' })
+        .onfinish = () => el.remove();
+    }
+}
+
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-play, .btn-primary');
+    if (btn && btn.href) {
+        const rect = btn.getBoundingClientRect();
+        launchConfetti(rect.left + rect.width/2, rect.top + rect.height/2);
+    }
+});
+
+// ── Recently Played ──
+const GAMES_DATA = [
+    { title: 'Lucky',               url: 'https://amongusman173-hub.github.io/PeakGames-Lucky/',         img: 'images/lucky.png',            tag: 'Casino' },
+    { title: 'Fishin Time',         url: 'https://amongusman173-hub.github.io/PeakGames-Fishin/',        img: 'images/fishing time.png',     tag: 'Adventure' },
+    { title: 'Roguelite Arena',     url: 'https://amongusman173-hub.github.io/PeakGames-Roguelite/',     img: 'images/rougelite arena.png',  tag: 'Action' },
+    { title: 'Tower Defense',       url: 'https://amongusman173-hub.github.io/PeakGames-TowerDefense/', img: 'images/tower defense.png',    tag: 'Strategy' },
+    { title: 'Untitled Incremental',url: 'https://amongusman173-hub.github.io/PeakGames-Incremental/',  img: 'images/incremental.png',      tag: 'Idle' },
+    { title: 'Minefield',           url: 'https://amongusman173-hub.github.io/PeakGames-MineField/',    img: 'images/MineField.png',        tag: 'Action' },
+];
+
+function trackPlay(url) {
+    let recent = JSON.parse(localStorage.getItem('recentGames') || '[]');
+    recent = [url, ...recent.filter(u => u !== url)].slice(0, 3);
+    localStorage.setItem('recentGames', JSON.stringify(recent));
+}
+
+function renderRecentlyPlayed() {
+    const section = document.getElementById('recentlyPlayed');
+    const grid = document.getElementById('recentlyGrid');
+    if (!section || !grid) return;
+    const recent = JSON.parse(localStorage.getItem('recentGames') || '[]');
+    if (recent.length === 0) return;
+    const games = recent.map(url => GAMES_DATA.find(g => g.url === url)).filter(Boolean);
+    if (games.length === 0) return;
+    grid.innerHTML = games.map(g => `
+        <a href="${g.url}" target="_blank" class="recently-card" data-url="${g.url}">
+            <img src="${g.img}" alt="${g.title}">
+            <div class="recently-card-info">
+                <span class="recently-card-name">${g.title}</span>
+                <span class="recently-card-tag">${g.tag}</span>
+            </div>
+        </a>
+    `).join('');
+    section.style.display = 'block';
+
+    // Track clicks from recently played too
+    grid.querySelectorAll('.recently-card').forEach(card => {
+        card.addEventListener('click', () => trackPlay(card.dataset.url));
+    });
+}
+
+// Track play button clicks
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-play, .btn-primary');
+    if (btn && btn.href && btn.href.includes('PeakGames')) {
+        trackPlay(btn.href);
+    }
+});
+
+// ── Random Game ──
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('randomGame');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        const game = GAMES_DATA[Math.floor(Math.random() * GAMES_DATA.length)];
+        // Flash the button
+        btn.textContent = `🎲 ${game.title}!`;
+        btn.style.background = 'linear-gradient(135deg, #667eea, #a78bfa)';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+            window.open(game.url, '_blank');
+            trackPlay(game.url);
+            setTimeout(() => {
+                btn.textContent = '🎲 Random';
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 1500);
+        }, 400);
+    });
+});
+
+// ── Render recently played on load ──
+document.addEventListener('DOMContentLoaded', renderRecentlyPlayed);
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.game-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {

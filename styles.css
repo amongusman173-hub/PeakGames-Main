@@ -1169,3 +1169,114 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
     .strip-grid { grid-template-columns: repeat(2, 1fr); }
     .hero-title { font-size: 3rem; }
 }
+
+/* ── Scroll Progress Bar ── */
+.scroll-progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--purple), var(--violet), #c084fc);
+    z-index: 9998; transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(167,139,250,0.6);
+}
+
+/* ── Confetti ── */
+.confetti-piece {
+    position: fixed; pointer-events: none; z-index: 99999;
+    transform-origin: center;
+}
+
+/* ── Recently Played ── */
+.recently-played {
+    margin-bottom: 2rem;
+}
+
+.recently-label {
+    font-size: 0.8rem; font-weight: 700; color: #555;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.9rem;
+}
+
+.recently-grid {
+    display: flex; gap: 0.8rem; flex-wrap: wrap;
+}
+
+.recently-card {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 0.5rem 0.9rem 0.5rem 0.5rem;
+    text-decoration: none;
+    transition: all 0.22s ease;
+}
+
+.recently-card:hover {
+    border-color: rgba(102,126,234,0.3);
+    background: rgba(102,126,234,0.06);
+    transform: translateY(-2px);
+}
+
+.recently-card img {
+    width: 40px; height: 28px; object-fit: cover;
+    border-radius: 6px; flex-shrink: 0;
+}
+
+.recently-card-info { display: flex; flex-direction: column; gap: 1px; }
+
+.recently-card-name {
+    color: #ccc; font-size: 0.82rem; font-weight: 600;
+    white-space: nowrap;
+}
+
+.recently-card-tag { color: #555; font-size: 0.7rem; }
+
+/* ── Random Game Button ── */
+.btn-random {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #888; border-radius: 50px;
+    padding: 6px 14px; font-size: 0.82rem; font-weight: 600;
+    font-family: 'Inter', sans-serif; cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-random:hover {
+    border-color: var(--violet); color: var(--violet);
+    background: rgba(167,139,250,0.08);
+    box-shadow: 0 0 14px rgba(167,139,250,0.15);
+}
+
+/* ── Extra polish ── */
+
+/* Smoother card hover with perspective */
+.games-grid { perspective: 1000px; }
+
+/* Subtle shimmer on featured image */
+.featured-img-wrap::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    transform: skewX(-15deg);
+    animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%   { left: -100%; }
+    50%  { left: 150%; }
+    100% { left: 150%; }
+}
+
+/* Glow pulse on NEW badge */
+.card-badge-new { animation: badgePulse 2s ease-in-out infinite; }
+
+/* Better focus styles */
+.search-input:focus,
+.category-btn:focus,
+.btn-play:focus,
+.btn-preview:focus {
+    outline: 2px solid rgba(102,126,234,0.5);
+    outline-offset: 2px;
+}
+
+/* Smooth image loading */
+.preview-thumb, .strip-card img, .featured-img, .recently-card img {
+    background: #0c0c1a;
+}

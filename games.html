@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    <div class="scroll-progress" id="scrollProgress"></div>
     <!-- Page loader -->
     <div class="page-loader" id="pageLoader">
         <div class="page-loader-inner">
@@ -44,6 +44,12 @@
 
     <section class="games-page">
         <div class="container">
+
+            <!-- Recently Played -->
+            <div class="recently-played" id="recentlyPlayed" style="display:none">
+                <div class="recently-label">🕹️ Recently Played</div>
+                <div class="recently-grid" id="recentlyGrid"></div>
+            </div>
 
             <!-- Featured Game -->
             <div class="featured-game" id="featuredGame">
@@ -88,7 +94,10 @@
                     </div>
                     <div class="search-results-info">
                         <span id="resultsCount">6 games</span>
-                        <button id="clearSearch" class="clear-search" style="display:none">Clear</button>
+                        <div style="display:flex;gap:0.8rem;align-items:center">
+                            <button id="randomGame" class="btn-random">🎲 Random</button>
+                            <button id="clearSearch" class="clear-search" style="display:none">Clear</button>
+                        </div>
                     </div>
                 </div>
             </div>
