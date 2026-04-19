@@ -153,11 +153,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('pageLoader');
     if (!loader) return;
 
-    // Fill bar then sweep out
+    // Hide all cards immediately
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(40px) scale(0.96)';
+    });
+
+    // After bar fills, sweep loader out then reveal cards
     setTimeout(() => {
         loader.classList.add('loader-done');
-        setTimeout(() => loader.remove(), 600);
-    }, 700);
+        setTimeout(() => {
+            loader.remove();
+            // Now stagger cards in
+            document.querySelectorAll('.game-card').forEach((card, i) => {
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, i * 90);
+            });
+        }, 500);
+    }, 750);
 });
 
 // ── Search & filter ──
@@ -172,18 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentCategory = 'all';
     let currentSearch = '';
-
-    // Staggered entrance animation on load
-    gameCards.forEach((card, i) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(40px) scale(0.96)';
-        card.style.transition = 'none';
-        setTimeout(() => {
-            card.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0) scale(1)';
-        }, 120 + i * 100);
-    });
 
     searchInput.addEventListener('input', (e) => {
         currentSearch = e.target.value.toLowerCase();
@@ -222,13 +226,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (match) {
                 card.style.display = 'block';
                 card.offsetHeight;
+                card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
                 card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
+                card.style.transform = 'translateY(0) scale(1)';
                 visibleCount++;
             } else {
+                card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
                 card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => { if (card.style.opacity === '0') card.style.display = 'none'; }, 300);
+                card.style.transform = 'translateY(16px) scale(0.97)';
+                setTimeout(() => { if (card.style.opacity === '0') card.style.display = 'none'; }, 260);
             }
         });
         resultsCount.textContent = `${visibleCount} game${visibleCount !== 1 ? 's' : ''} found`;
