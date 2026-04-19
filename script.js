@@ -171,25 +171,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('pageLoader');
     if (!loader) return;
 
-    // Hide all cards immediately
-    document.querySelectorAll('.game-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(40px) scale(0.96)';
-    });
+    // Hide everything immediately
+    const featured = document.getElementById('featuredGame');
+    const gamesHeader = document.querySelector('.games-header');
+    const cards = document.querySelectorAll('.game-card');
 
-    // After bar fills, sweep loader out then reveal cards
+    const hideEl = (el) => {
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(32px)';
+        el.style.transition = 'none';
+    };
+
+    hideEl(featured);
+    hideEl(gamesHeader);
+    cards.forEach(c => hideEl(c));
+
+    // After bar fills → sweep loader out
     setTimeout(() => {
         loader.classList.add('loader-done');
+
         setTimeout(() => {
             loader.remove();
-            // Now stagger cards in
-            document.querySelectorAll('.game-card').forEach((card, i) => {
+
+            const revealEl = (el, delay) => {
+                if (!el) return;
                 setTimeout(() => {
-                    card.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0) scale(1)';
-                }, i * 90);
-            });
+                    el.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, delay);
+            };
+
+            // Stagger: featured → header → cards one by one
+            revealEl(featured, 0);
+            revealEl(gamesHeader, 150);
+            cards.forEach((card, i) => revealEl(card, 280 + i * 90));
+
         }, 500);
     }, 750);
 });
