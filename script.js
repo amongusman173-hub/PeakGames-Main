@@ -372,86 +372,116 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── Live Player Count ──
-// Uses localStorage with heartbeat — tracks real concurrent visitors across tabs
-const SESSION_ID = Math.random().toString(36).slice(2);
-const HEARTBEAT_INTERVAL = 8000; // 8s
-const SESSION_TIMEOUT = 20000;   // 20s — session considered dead
+// Uses Firebase Realtime Database (free tier, full CORS)
+// Setup: https://console.firebase.google.com → create project → Realtime Database → start in test mode
+// Replace FIREBASE_URL below with your database URL (looks like https://YOUR-PROJECT-default-rtdb.firebaseio.com)
+const FIREBASE_URL = 'https://peakgames-80711-default-rtdb.firebaseio.com/players';
 
-let currentGame = null;
+// Anonymous session ID
+var _pgSid = localStorage.getItem('pg-sid');
+if (!_pgSid) { _pgSid = Math.random().toString(36).slice(2, 10); localStorage.setItem('pg-sid', _pgSid); }
+const PG_SID = _pgSid;
 
-function heartbeat() {
-    if (!currentGame) return;
-    const key = `players_${currentGame}`;
-    const sessions = JSON.parse(localStorage.getItem(key) || '{}');
-    sessions[SESSION_ID] = Date.now();
-    localStorage.setItem(key, JSON.stringify(sessions));
+var pgCurrentGame = null;
+
+function gameKeyFromUrl(url) {
+    return (url || '').replace('https://amongusman173-hub.github.io/PeakGames-', '').replace(/\/$/, '').toLowerCase() || null;
 }
 
-function clearSession() {
-    if (!currentGame) return;
-    const key = `players_${currentGame}`;
-    const sessions = JSON.parse(localStorage.getItem(key) || '{}');
-    delete sessions[SESSION_ID];
-    localStorage.setItem(key, JSON.stringify(sessions));
+// Write our session entry
+function pgWrite() {
+    if (!pgCurrentGame) return;
+    fetch(FIREBASE_URL + '/' + PG_SID + '.json', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ t: Date.now(), g: pgCurrentGame }),
+        keepalive: true
+    }).catch(() => {});
 }
 
-function getActivePlayers(game) {
-    const key = `players_${game}`;
-    const sessions = JSON.parse(localStorage.getItem(key) || '{}');
-    const now = Date.now();
-    // Clean stale sessions
-    let count = 0;
-    const fresh = {};
-    for (const [id, ts] of Object.entries(sessions)) {
-        if (now - ts < SESSION_TIMEOUT) { fresh[id] = ts; count++; }
-    }
-    localStorage.setItem(key, JSON.stringify(fresh));
-    return count;
+// Read all sessions and update UI
+function pgRead() {
+    fetch(FIREBASE_URL + '.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var now = Date.now();
+            var counts = {};
+            if (data) {
+                Object.keys(data).forEach(function(id) {
+                    var e = data[id];
+                    if (!e || now - e.t > 120000) return;
+                    counts[e.g] = (counts[e.g] || 0) + 1;
+                });
+            }
+            document.querySelectorAll('.player-count').forEach(function(el) {
+                var game = el.dataset.game;
+                var n = counts[game] || 0;
+                if (n > 0) {
+                    el.innerHTML = '<span class="player-dot"></span>' + n + ' playing';
+                    el.style.display = 'inline-flex';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        })
+        .catch(function() {});
 }
 
-function updatePlayerCounts() {
-    document.querySelectorAll('.player-count').forEach(el => {
-        const game = el.dataset.game;
-        const count = getActivePlayers(game);
-        if (count > 0) {
-            el.innerHTML = `<span class="player-dot"></span>${count} playing`;
-            el.style.display = 'inline-flex';
+// Remove our entry on leave
+function pgLeave() {
+    if (!pgCurrentGame) return;
+    fetch(FIREBASE_URL + '/' + PG_SID + '.json', { method: 'DELETE', keepalive: true }).catch(() => {});
+}
+
+// Hook into preview toggle (in-page iframe preview) — games.html only
+if (typeof window.togglePreview === 'function') {
+    const _origToggle = window.togglePreview;
+    window.togglePreview = function(event) {
+        _origToggle(event);
+        const preview = event.target.closest('.game-card').querySelector('.game-preview');
+        if (preview.classList.contains('expanded')) {
+            pgCurrentGame = gameKeyFromUrl(preview.dataset.src);
+            pgWrite();
         } else {
-            el.style.display = 'none';
+            pgLeave();
+            pgCurrentGame = null;
         }
-    });
+    };
 }
 
-// Start heartbeat when preview opens, stop when closed
-const _origToggle = window.togglePreview;
-window.togglePreview = function(event) {
-    _origToggle(event);
-    const gameCard = event.target.closest('.game-card');
-    const preview = gameCard.querySelector('.game-preview');
-    const game = preview.dataset.src
-        .replace('https://amongusman173-hub.github.io/PeakGames-','')
-        .replace('/','').toLowerCase()
-        .replace('minefield','minefield')
-        .replace('lucky','lucky')
-        .replace('fishin','fishin')
-        .replace('roguelite','roguelite')
-        .replace('towerdefense','towerdefense')
-        .replace('incremental','incremental');
+// Track "Play Now" clicks — user opened game in new tab, count them as playing
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-play, .btn-primary').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            // Use data-game attribute if present, otherwise parse the URL
+            var key = btn.dataset.game || gameKeyFromUrl(btn.getAttribute('href') || '');
+            if (!key) return;
+            pgCurrentGame = key;
+            localStorage.setItem('pg-playing', JSON.stringify({ g: key, t: Date.now() }));
+            pgWrite();
+        });
+    });
 
-    if (preview.classList.contains('expanded')) {
-        clearSession();
-        currentGame = game;
-        heartbeat();
-    } else {
-        clearSession();
-        currentGame = null;
+    // On load, resume counting if they were playing something recently (within 30 min)
+    var stored = JSON.parse(localStorage.getItem('pg-playing') || 'null');
+    if (stored && Date.now() - stored.t < 1800000) {
+        pgCurrentGame = stored.g;
+        pgWrite();
     }
-};
 
-setInterval(heartbeat, HEARTBEAT_INTERVAL);
-setInterval(updatePlayerCounts, 3000);
-window.addEventListener('beforeunload', clearSession);
-document.addEventListener('DOMContentLoaded', updatePlayerCounts);
+    pgRead();
+    setInterval(pgRead, 5000);
+    setInterval(function() { if (pgCurrentGame) pgWrite(); }, 8000);
+});
+
+// On tab close: remove Firebase entry but keep localStorage so
+// navigating between pages doesn't lose the "playing" state
+window.addEventListener('beforeunload', function() {
+    pgLeave();
+});
+
+// Only clear the stored game if the tab has been idle for 30+ min
+// (handled naturally by the 2-min Firebase timeout)
 
 // ── Render recently played on load ──
 document.addEventListener('DOMContentLoaded', renderRecentlyPlayed);

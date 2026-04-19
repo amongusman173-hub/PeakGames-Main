@@ -11,6 +11,8 @@
 </head>
 <body>
     <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ── Navbar ── -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
@@ -50,12 +52,31 @@
             </div>
         </div>
         <div class="hero-content">
-            <div class="hero-badge">🎮 6 Games Available</div>
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                6 Games Available
+            </div>
             <h1 class="hero-title">Peak<br><span class="hero-title-accent">Games</span></h1>
-            <p class="hero-subtitle">Free browser games built with passion.<br>No downloads. No accounts. Just play.</p>
+            <p class="hero-subtitle">Browser games built with passion. No downloads, no accounts, no paywalls.</p>
             <div class="hero-actions">
-                <a href="games.html" class="btn-primary">Browse Games →</a>
-                <a href="#about" class="btn-ghost">Learn More</a>
+                <a href="games.html" class="btn-primary">Browse Games <span class="btn-arrow">→</span></a>
+                <a href="#games" class="btn-ghost">See What's Playing</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-num">6</span>
+                    <span class="hero-stat-label">Games</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="hero-stat-num">100%</span>
+                    <span class="hero-stat-label">Free</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="hero-stat-num">0</span>
+                    <span class="hero-stat-label">Downloads</span>
+                </div>
             </div>
         </div>
         <div class="hero-scroll-hint">
@@ -63,54 +84,110 @@
         </div>
     </header>
 
-    <!-- ── Game Previews Strip ── -->
-    <section class="games-strip">
+    <!-- ── Games Section ── -->
+    <section id="games" class="home-games-section">
         <div class="container">
-            <div class="strip-header">
-                <h2>Our Games</h2>
-                <a href="games.html" class="strip-link">View All →</a>
+            <div class="home-section-header">
+                <div class="home-section-label">Our Games</div>
+                <h2 class="home-section-title">Pick something to play</h2>
+                <a href="games.html" class="home-section-link">View all games →</a>
             </div>
-            <div class="strip-grid">
-                <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/" target="_blank" class="strip-card">
-                    <img src="images/lucky.png" alt="Lucky">
-                    <div class="strip-card-info">
-                        <span class="strip-card-name">Lucky</span>
-                        <span class="strip-card-tag">Casino</span>
+            <div class="home-games-grid">
+                <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/" target="_blank" class="home-game-card">
+                    <div class="home-game-img-wrap">
+                        <img src="images/lucky.png" alt="Lucky">
+                        <div class="home-game-overlay">
+                            <span class="home-game-play">Play Now →</span>
+                        </div>
+                    </div>
+                    <div class="home-game-info">
+                        <div class="home-game-top">
+                            <span class="home-game-name">Lucky</span>
+                            <span class="home-game-tag">Casino</span>
+                        </div>
+                        <p class="home-game-desc">Dice, mines, roulette, slots and more. Test your luck.</p>
+                        <span class="player-count strip-player-count" data-game="lucky"></span>
                     </div>
                 </a>
-                <a href="https://amongusman173-hub.github.io/PeakGames-Fishin/" target="_blank" class="strip-card">
-                    <img src="images/fishing time.png" alt="Fishin Time">
-                    <div class="strip-card-info">
-                        <span class="strip-card-name">Fishin Time</span>
-                        <span class="strip-card-tag">Adventure</span>
+                <a href="https://amongusman173-hub.github.io/PeakGames-Fishin/" target="_blank" class="home-game-card">
+                    <div class="home-game-img-wrap">
+                        <img src="images/fishing time.png" alt="Fishin Time">
+                        <div class="home-game-overlay">
+                            <span class="home-game-play">Play Now →</span>
+                        </div>
+                    </div>
+                    <div class="home-game-info">
+                        <div class="home-game-top">
+                            <span class="home-game-name">Fishin Time</span>
+                            <span class="home-game-tag">Adventure</span>
+                        </div>
+                        <p class="home-game-desc">Cast your line and reel in a variety of fish.</p>
+                        <span class="player-count strip-player-count" data-game="fishin"></span>
                     </div>
                 </a>
-                <a href="https://amongusman173-hub.github.io/PeakGames-Roguelite/" target="_blank" class="strip-card">
-                    <img src="images/rougelite arena.png" alt="Roguelite Arena">
-                    <div class="strip-card-info">
-                        <span class="strip-card-name">Roguelite Arena</span>
-                        <span class="strip-card-tag">Action</span>
+                <a href="https://amongusman173-hub.github.io/PeakGames-Roguelite/" target="_blank" class="home-game-card">
+                    <div class="home-game-img-wrap">
+                        <img src="images/rougelite arena.png" alt="Roguelite Arena">
+                        <div class="home-game-overlay">
+                            <span class="home-game-play">Play Now →</span>
+                        </div>
+                    </div>
+                    <div class="home-game-info">
+                        <div class="home-game-top">
+                            <span class="home-game-name">Roguelite Arena</span>
+                            <span class="home-game-tag">Action</span>
+                        </div>
+                        <p class="home-game-desc">Every run is unique. Battle through procedurally generated levels.</p>
+                        <span class="player-count strip-player-count" data-game="roguelite"></span>
                     </div>
                 </a>
-                <a href="https://amongusman173-hub.github.io/PeakGames-TowerDefense/" target="_blank" class="strip-card">
-                    <img src="images/tower defense.png" alt="Tower Defense">
-                    <div class="strip-card-info">
-                        <span class="strip-card-name">Tower Defense</span>
-                        <span class="strip-card-tag">Strategy</span>
+                <a href="https://amongusman173-hub.github.io/PeakGames-TowerDefense/" target="_blank" class="home-game-card">
+                    <div class="home-game-img-wrap">
+                        <img src="images/tower defense.png" alt="Tower Defense">
+                        <div class="home-game-overlay">
+                            <span class="home-game-play">Play Now →</span>
+                        </div>
+                    </div>
+                    <div class="home-game-info">
+                        <div class="home-game-top">
+                            <span class="home-game-name">Tower Defense</span>
+                            <span class="home-game-tag">Strategy</span>
+                        </div>
+                        <p class="home-game-desc">Build towers, defend against waves, survive.</p>
+                        <span class="player-count strip-player-count" data-game="towerdefense"></span>
                     </div>
                 </a>
-                <a href="https://amongusman173-hub.github.io/PeakGames-Incremental/" target="_blank" class="strip-card">
-                    <img src="images/incremental.png" alt="Untitled Incremental">
-                    <div class="strip-card-info">
-                        <span class="strip-card-name">Untitled Incremental</span>
-                        <span class="strip-card-tag">Idle</span>
+                <a href="https://amongusman173-hub.github.io/PeakGames-Incremental/" target="_blank" class="home-game-card">
+                    <div class="home-game-img-wrap">
+                        <img src="images/incremental.png" alt="Untitled Incremental">
+                        <div class="home-game-overlay">
+                            <span class="home-game-play">Play Now →</span>
+                        </div>
+                    </div>
+                    <div class="home-game-info">
+                        <div class="home-game-top">
+                            <span class="home-game-name">Untitled Incremental</span>
+                            <span class="home-game-tag">Idle</span>
+                        </div>
+                        <p class="home-game-desc">Grow resources, automate production, reach milestones.</p>
+                        <span class="player-count strip-player-count" data-game="incremental"></span>
                     </div>
                 </a>
-                <a href="https://amongusman173-hub.github.io/PeakGames-MineField/" target="_blank" class="strip-card">
-                    <img src="images/MineField.png" alt="Minefield">
-                    <div class="strip-card-info">
-                        <span class="strip-card-name">Minefield</span>
-                        <span class="strip-card-tag">Survival</span>
+                <a href="https://amongusman173-hub.github.io/PeakGames-MineField/" target="_blank" class="home-game-card home-game-card--new">
+                    <div class="home-game-img-wrap">
+                        <img src="images/MineField.png" alt="Minefield">
+                        <div class="home-game-overlay">
+                            <span class="home-game-play">Play Now →</span>
+                        </div>
+                        <span class="home-game-badge">NEW</span>
+                    </div>
+                    <div class="home-game-info">
+                        <div class="home-game-top">
+                            <span class="home-game-name">Minefield</span>
+                            <span class="home-game-tag">Survival</span>
+                        </div>
+                        <p class="home-game-desc">Navigate a dangerous minefield. Avoid explosions, clear the field.</p>
+                        <span class="player-count strip-player-count" data-game="minefield"></span>
                     </div>
                 </a>
             </div>
@@ -120,32 +197,58 @@
     <!-- ── About ── -->
     <section id="about" class="about-section">
         <div class="container">
-            <div class="about-grid">
-                <div class="about-text">
-                    <div class="about-label">About Us</div>
-                    <h2>Built for fun.<br>Free forever.</h2>
-                    <p>We make browser games that are easy to pick up and hard to put down. No installs, no paywalls — just open and play.</p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-number">6</div>
-                            <div class="stat-label">Games Released</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">∞</div>
-                            <div class="stat-label">Hours of Fun</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Free to Play</div>
-                        </div>
+            <div class="about-header">
+                <div class="home-section-label">About Us</div>
+                <h2 class="about-heading">Built for fun.<br>Free forever.</h2>
+                <p class="about-body">Browser games that are easy to pick up and hard to put down. No installs, no paywalls — just open and play.</p>
+            </div>
+            <div class="about-inner">
+                <div class="about-stats">
+                    <div class="about-stat">
+                        <div class="about-stat-num">6</div>
+                        <div class="about-stat-label">Games Released</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="about-stat-num">∞</div>
+                        <div class="about-stat-label">Hours of Fun</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="about-stat-num">100%</div>
+                        <div class="about-stat-label">Free to Play</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="about-stat-num">0</div>
+                        <div class="about-stat-label">Downloads Needed</div>
                     </div>
                 </div>
-                <div class="about-visual">
-                    <div class="floating-elements">
-                        <div class="floating-card">🎮</div>
-                        <div class="floating-card">🎲</div>
-                        <div class="floating-card">⚔️</div>
-                        <div class="floating-card">💎</div>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <div class="about-feature-icon">⚡</div>
+                        <div class="about-feature-text">
+                            <div class="about-feature-title">Instant Play</div>
+                            <div class="about-feature-desc">Open your browser and start playing. Zero setup required.</div>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <div class="about-feature-icon">🔓</div>
+                        <div class="about-feature-text">
+                            <div class="about-feature-title">No Account Needed</div>
+                            <div class="about-feature-desc">No sign-ups, no emails, no passwords. Ever.</div>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <div class="about-feature-icon">💻</div>
+                        <div class="about-feature-text">
+                            <div class="about-feature-title">Open Source</div>
+                            <div class="about-feature-desc">Every game is on GitHub. Fully transparent, always.</div>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <div class="about-feature-icon">🎮</div>
+                        <div class="about-feature-text">
+                            <div class="about-feature-title">Always Growing</div>
+                            <div class="about-feature-desc">New games added regularly. Always something fresh to try.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,47 +258,84 @@
     <!-- ── Privacy ── -->
     <section id="privacy" class="privacy-section">
         <div class="container">
-            <div class="privacy-content">
-                <h2>Privacy Policy</h2>
-                <div class="privacy-grid">
+            <div class="privacy-inner">
+                <div class="privacy-header">
+                    <div class="home-section-label" style="display:block;text-align:center">Privacy Policy</div>
+                    <h2 class="privacy-heading">Your data stays yours</h2>
+                    <p class="privacy-sub">We built this for fun, not data collection. Here's exactly what we do — and don't — do.</p>
+                </div>
+                <div class="privacy-cards">
                     <div class="privacy-card">
-                        <div class="privacy-icon">🔒</div>
-                        <h3>Data Protection</h3>
-                        <p>We don't collect personal data. All game progress is stored locally on your device.</p>
+                        <div class="privacy-card-icon-wrap">
+                            <div class="privacy-icon">🔒</div>
+                        </div>
+                        <div class="privacy-card-body">
+                            <h3>No Personal Data</h3>
+                            <p>We never collect names, emails, or any identifying information. All game progress lives on your device only.</p>
+                        </div>
                     </div>
                     <div class="privacy-card">
-                        <div class="privacy-icon">🍪</div>
-                        <h3>No Cookies</h3>
-                        <p>Our games run entirely in your browser without tracking cookies or analytics.</p>
+                        <div class="privacy-card-icon-wrap">
+                            <div class="privacy-icon">🍪</div>
+                        </div>
+                        <div class="privacy-card-body">
+                            <h3>No Tracking Cookies</h3>
+                            <p>No analytics, no ad trackers, no third-party cookies. Your browsing stays private.</p>
+                        </div>
                     </div>
                     <div class="privacy-card">
-                        <div class="privacy-icon">🌐</div>
-                        <h3>Open Source</h3>
-                        <p>All our games are open source and hosted on GitHub for full transparency.</p>
+                        <div class="privacy-card-icon-wrap">
+                            <div class="privacy-icon">💾</div>
+                        </div>
+                        <div class="privacy-card-body">
+                            <h3>Local Storage Only</h3>
+                            <p>Game saves and preferences are stored in your browser's localStorage — never sent to a server.</p>
+                        </div>
+                    </div>
+                    <div class="privacy-card">
+                        <div class="privacy-card-icon-wrap">
+                            <div class="privacy-icon">🌐</div>
+                        </div>
+                        <div class="privacy-card-body">
+                            <h3>Open Source</h3>
+                            <p>Every line of code is public on GitHub. You can verify exactly what runs in your browser.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="privacy-note">
-                    <p><strong>Entertainment Only:</strong> Our casino-style games are for entertainment purposes only and do not involve real money gambling.</p>
+                    <span class="privacy-note-icon">⚠️</span>
+                    <p><strong>Entertainment Only:</strong> Casino-style games on this site are for entertainment purposes only and do not involve real money or gambling.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ── Footer ── -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
+            <div class="footer-inner">
                 <div class="footer-brand">
-                    <h3>Peak Games</h3>
-                    <p>Free browser games</p>
+                    <span class="footer-logo">Peak Games</span>
+                    <p>Free browser games, built with passion.</p>
                 </div>
-                <div class="footer-links">
-                    <a href="games.html">Games</a>
-                    <a href="#about">About</a>
-                    <a href="#privacy">Privacy</a>
+                <div class="footer-cols">
+                    <div class="footer-col">
+                        <div class="footer-col-title">Navigate</div>
+                        <a href="games.html">Games</a>
+                        <a href="#about">About</a>
+                        <a href="#privacy">Privacy</a>
+                    </div>
+                    <div class="footer-col">
+                        <div class="footer-col-title">Games</div>
+                        <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/" target="_blank">Lucky</a>
+                        <a href="https://amongusman173-hub.github.io/PeakGames-Fishin/" target="_blank">Fishin Time</a>
+                        <a href="https://amongusman173-hub.github.io/PeakGames-MineField/" target="_blank">Minefield</a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Peak Games. All rights reserved.</p>
+                <p>© 2026 Peak Games. All rights reserved.</p>
+                <a href="https://github.com/amongusman173-hub" target="_blank" class="footer-github">GitHub ↗</a>
             </div>
         </div>
     </footer>
