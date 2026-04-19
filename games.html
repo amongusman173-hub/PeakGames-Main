@@ -7,9 +7,10 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <!-- Page loader -->
     <div class="page-loader" id="pageLoader">
         <div class="page-loader-inner">
@@ -29,199 +30,198 @@
                 <a href="index.html#privacy">Privacy</a>
                 <button class="music-toggle" id="musicToggle" title="Toggle Music">♪</button>
             </div>
+            <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div class="nav-mobile" id="navMobile">
+            <a href="games.html">Games</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#privacy">Privacy</a>
         </div>
     </nav>
 
     <section class="games-page">
         <div class="container">
-            <h2 class="section-title">Our Games</h2>
 
-            <div class="search-container">
-                <div class="search-bar">
-                    <div class="search-input-wrapper">
-                        <input type="text" id="gameSearch" placeholder="Search games..." class="search-input">
-                        <div class="search-icon">🔍</div>
+            <!-- Featured Game -->
+            <div class="featured-game" id="featuredGame">
+                <div class="featured-badge">⭐ Most Played</div>
+                <div class="featured-content">
+                    <div class="featured-img-wrap">
+                        <img src="images/lucky.png" alt="Lucky" class="featured-img">
+                        <div class="featured-img-glow"></div>
+                    </div>
+                    <div class="featured-info">
+                        <div class="featured-label">Featured Game</div>
+                        <h2 class="featured-title">Lucky</h2>
+                        <p class="featured-desc">The most-played game on Peak Games. A comprehensive casino experience with dice, mines, roulette, stocks, slots, and more. Test your luck across dozens of mini-games.</p>
+                        <div class="featured-tags">
+                            <span class="feature-tag">Casino</span>
+                            <span class="feature-tag">Strategy</span>
+                        </div>
+                        <div class="featured-actions">
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/" target="_blank" class="btn-primary">Play Now →</a>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-Lucky" target="_blank" class="btn-source">↗ Source</a>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="category-filters">
-                    <button class="category-btn active" data-category="all">All Games</button>
-                    <button class="category-btn" data-category="casino">Casino</button>
-                    <button class="category-btn" data-category="action">Action</button>
-                    <button class="category-btn" data-category="strategy">Strategy</button>
-                    <button class="category-btn" data-category="adventure">Adventure</button>
-                </div>
-
-                <div class="search-results-info">
-                    <span id="resultsCount">6 games found</span>
-                    <button id="clearSearch" class="clear-search" style="display: none;">Clear Search</button>
+            <!-- Search & Filters -->
+            <div class="games-header">
+                <h2 class="section-title">All Games</h2>
+                <div class="search-container">
+                    <div class="search-bar">
+                        <div class="search-input-wrapper">
+                            <svg class="search-svg-icon" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            <input type="text" id="gameSearch" placeholder="Search games..." class="search-input">
+                        </div>
+                    </div>
+                    <div class="category-filters">
+                        <button class="category-btn active" data-category="all">All</button>
+                        <button class="category-btn" data-category="casino">Casino</button>
+                        <button class="category-btn" data-category="action">Action</button>
+                        <button class="category-btn" data-category="strategy">Strategy</button>
+                        <button class="category-btn" data-category="adventure">Adventure</button>
+                    </div>
+                    <div class="search-results-info">
+                        <span id="resultsCount">6 games</span>
+                        <button id="clearSearch" class="clear-search" style="display:none">Clear</button>
+                    </div>
                 </div>
             </div>
 
             <div class="games-grid">
-                <div class="game-card" data-category="strategy action" data-title="Tower Defense" data-description="tower defense strategy game build towers defend against waves of enemies">
-                    <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-TowerDefense/">
-                        <img class="preview-thumb" src="images/tower defense.png" alt="Tower Defense Preview">
-                        <div class="preview-overlay">
-                            <span class="preview-hint">▶ Click Preview to play</span>
-                        </div>
-                        <iframe title="Tower Defense Preview" style="display:none"></iframe>
-                    </div>
-                    <div class="game-info">
-                        <h3>Tower Defense</h3>
-                        <p>Build and upgrade towers to defend against endless waves of enemies. Plan your strategy, manage resources, and survive as long as you can.</p>
-                        <div class="game-features">
-                            <span class="feature-tag">Strategy</span>
-                            <span class="feature-tag">Action</span>
-                            <span class="feature-tag">Tower Defense</span>
-                        </div>
-                        <div class="game-actions">
-                            <a href="https://amongusman173-hub.github.io/PeakGames-TowerDefense/"
-                               target="_blank"
-                               class="btn-play">Play Now</a>
-                            <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
-                            <a href="https://github.com/amongusman173-hub/PeakGames-TowerDefense"
-                               target="_blank"
-                               class="btn-source">Source</a>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="game-card" data-category="action strategy" data-title="Minefield" data-description="minefield action strategy game navigate through mines survive and clear the field">
+                    <div class="card-badge card-badge-new">NEW</div>
                     <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-MineField/">
-                        <img class="preview-thumb" src="images/MineField.png" alt="Minefield Preview">
-                        <div class="preview-overlay">
-                            <span class="preview-hint">▶ Click Preview to play</span>
-                        </div>
+                        <img class="preview-thumb" src="images/MineField.png" alt="Minefield">
+                        <div class="preview-overlay"><span class="preview-hint">▶ Preview</span></div>
                         <iframe title="Minefield Preview" style="display:none"></iframe>
                     </div>
                     <div class="game-info">
                         <h3>Minefield</h3>
-                        <p>Navigate through a dangerous minefield, avoid explosions, and clear the field. A tense action-strategy game that tests your nerves and decision making.</p>
+                        <p>Navigate a dangerous minefield, avoid explosions, and clear the field. Tense action-strategy that tests your nerves.</p>
                         <div class="game-features">
                             <span class="feature-tag">Action</span>
                             <span class="feature-tag">Strategy</span>
                             <span class="feature-tag">Survival</span>
                         </div>
                         <div class="game-actions">
-                            <a href="https://amongusman173-hub.github.io/PeakGames-MineField/"
-                               target="_blank"
-                               class="btn-play">Play Now</a>
+                            <a href="https://amongusman173-hub.github.io/PeakGames-MineField/" target="_blank" class="btn-play">Play Now</a>
                             <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
-                            <a href="https://github.com/amongusman173-hub/PeakGames-MineField"
-                               target="_blank"
-                               class="btn-source">Source</a>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-MineField" target="_blank" class="btn-source">↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card" data-category="strategy action" data-title="Tower Defense" data-description="tower defense strategy game build towers defend against waves of enemies">
+                    <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-TowerDefense/">
+                        <img class="preview-thumb" src="images/tower defense.png" alt="Tower Defense">
+                        <div class="preview-overlay"><span class="preview-hint">▶ Preview</span></div>
+                        <iframe title="Tower Defense Preview" style="display:none"></iframe>
+                    </div>
+                    <div class="game-info">
+                        <h3>Tower Defense</h3>
+                        <p>Build and upgrade towers to defend against endless waves of enemies. Plan your strategy and survive.</p>
+                        <div class="game-features">
+                            <span class="feature-tag">Strategy</span>
+                            <span class="feature-tag">Action</span>
+                        </div>
+                        <div class="game-actions">
+                            <a href="https://amongusman173-hub.github.io/PeakGames-TowerDefense/" target="_blank" class="btn-play">Play Now</a>
+                            <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-TowerDefense" target="_blank" class="btn-source">↗</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="game-card" data-category="strategy" data-title="Untitled Incremental" data-description="idle incremental game grow your resources automate production and reach new milestones">
                     <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-Incremental/">
-                        <img class="preview-thumb" src="images/incremental.png" alt="Untitled Incremental Preview">
-                        <div class="preview-overlay">
-                            <span class="preview-hint">▶ Click Preview to play</span>
-                        </div>
+                        <img class="preview-thumb" src="images/incremental.png" alt="Untitled Incremental">
+                        <div class="preview-overlay"><span class="preview-hint">▶ Preview</span></div>
                         <iframe title="Untitled Incremental Preview" style="display:none"></iframe>
                     </div>
                     <div class="game-info">
                         <h3>Untitled Incremental</h3>
-                        <p>An idle incremental game where you grow your resources, automate production, and push toward new milestones. Easy to pick up, hard to put down.</p>
+                        <p>Grow your resources, automate production, and push toward new milestones. Easy to pick up, hard to put down.</p>
                         <div class="game-features">
                             <span class="feature-tag">Incremental</span>
                             <span class="feature-tag">Idle</span>
                             <span class="feature-tag">Strategy</span>
                         </div>
                         <div class="game-actions">
-                            <a href="https://amongusman173-hub.github.io/PeakGames-Incremental/"
-                               target="_blank"
-                               class="btn-play">Play Now</a>
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Incremental/" target="_blank" class="btn-play">Play Now</a>
                             <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
-                            <a href="https://github.com/amongusman173-hub/PeakGames-Incremental"
-                               target="_blank"
-                               class="btn-source">Source</a>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-Incremental" target="_blank" class="btn-source">↗</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="game-card" data-category="casino strategy" data-title="Lucky" data-description="casino experience featuring multiple games including dice mines roulette stocks slots">
+                    <div class="card-badge card-badge-hot">🔥 Popular</div>
                     <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-Lucky/">
-                        <img class="preview-thumb" src="images/lucky.png" alt="Lucky Preview">
-                        <div class="preview-overlay">
-                            <span class="preview-hint">▶ Click Preview to play</span>
-                        </div>
+                        <img class="preview-thumb" src="images/lucky.png" alt="Lucky">
+                        <div class="preview-overlay"><span class="preview-hint">▶ Preview</span></div>
                         <iframe title="Lucky Preview" style="display:none"></iframe>
                     </div>
                     <div class="game-info">
                         <h3>Lucky</h3>
-                        <p>A comprehensive casino experience featuring multiple games including dice, mines, roulette, stocks, slots, and more. Test your luck with various betting strategies and risk levels.</p>
+                        <p>Casino experience with dice, mines, roulette, stocks, slots, and more. Test your luck with various strategies.</p>
                         <div class="game-features">
                             <span class="feature-tag">Casino</span>
                             <span class="feature-tag">Strategy</span>
                         </div>
                         <div class="game-actions">
-                            <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/"
-                               target="_blank"
-                               class="btn-play">Play Now</a>
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/" target="_blank" class="btn-play">Play Now</a>
                             <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
-                            <a href="https://github.com/amongusman173-hub/PeakGames-Lucky"
-                               target="_blank"
-                               class="btn-source">Source</a>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-Lucky" target="_blank" class="btn-source">↗</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="game-card" data-category="adventure" data-title="Fishin Time" data-description="chill relaxing fishing game cast your line and reel in a variety of fish">
                     <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-Fishin/">
-                        <img class="preview-thumb" src="images/fishing time.png" alt="Fishin Time Preview">
-                        <div class="preview-overlay">
-                            <span class="preview-hint">▶ Click Preview to play</span>
-                        </div>
+                        <img class="preview-thumb" src="images/fishing time.png" alt="Fishin Time">
+                        <div class="preview-overlay"><span class="preview-hint">▶ Preview</span></div>
                         <iframe title="Fishin Time Preview" style="display:none"></iframe>
                     </div>
                     <div class="game-info">
                         <h3>Fishin Time</h3>
-                        <p>A chill fishing experience where you cast your line, relax, and reel in a variety of fish. Perfect for unwinding and enjoying a laid-back adventure.</p>
+                        <p>Cast your line, relax, and reel in a variety of fish. Perfect for unwinding with a laid-back adventure.</p>
                         <div class="game-features">
                             <span class="feature-tag">Adventure</span>
                             <span class="feature-tag">Chill</span>
                             <span class="feature-tag">Fishing</span>
                         </div>
                         <div class="game-actions">
-                            <a href="https://amongusman173-hub.github.io/PeakGames-Fishin/"
-                               target="_blank"
-                               class="btn-play">Play Now</a>
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Fishin/" target="_blank" class="btn-play">Play Now</a>
                             <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
-                            <a href="https://github.com/amongusman173-hub/PeakGames-Fishin"
-                               target="_blank"
-                               class="btn-source">Source</a>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-Fishin" target="_blank" class="btn-source">↗</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="game-card" data-category="action adventure" data-title="Roguelite Arena" data-description="roguelite adventure where every run is unique battle through procedurally generated levels">
                     <div class="game-preview" data-src="https://amongusman173-hub.github.io/PeakGames-Roguelite/">
-                        <img class="preview-thumb" src="images/rougelite arena.png" alt="Roguelite Arena Preview">
-                        <div class="preview-overlay">
-                            <span class="preview-hint">▶ Click Preview to play</span>
-                        </div>
+                        <img class="preview-thumb" src="images/rougelite arena.png" alt="Roguelite Arena">
+                        <div class="preview-overlay"><span class="preview-hint">▶ Preview</span></div>
                         <iframe title="Roguelite Arena Preview" style="display:none"></iframe>
                     </div>
                     <div class="game-info">
                         <h3>Roguelite Arena</h3>
-                        <p>An exciting roguelite adventure where every run is unique. Battle through procedurally generated levels, collect powerful upgrades, and test your skills against challenging enemies.</p>
+                        <p>Every run is unique. Battle through procedurally generated levels, collect upgrades, and challenge enemies.</p>
                         <div class="game-features">
                             <span class="feature-tag">Roguelite</span>
                             <span class="feature-tag">Action</span>
                             <span class="feature-tag">Adventure</span>
                         </div>
                         <div class="game-actions">
-                            <a href="https://amongusman173-hub.github.io/PeakGames-Roguelite/"
-                               target="_blank"
-                               class="btn-play">Play Now</a>
+                            <a href="https://amongusman173-hub.github.io/PeakGames-Roguelite/" target="_blank" class="btn-play">Play Now</a>
                             <button class="btn-preview" onclick="togglePreview(event)">Preview</button>
-                            <a href="https://github.com/amongusman173-hub/PeakGames-Roguelite"
-                               target="_blank"
-                               class="btn-source">Source</a>
+                            <a href="https://github.com/amongusman173-hub/PeakGames-Roguelite" target="_blank" class="btn-source">↗</a>
                         </div>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3>Peak Games</h3>
-                    <p>Premium Gaming Experience</p>
+                    <p>Free browser games</p>
                 </div>
                 <div class="footer-links">
                     <a href="games.html">Games</a>

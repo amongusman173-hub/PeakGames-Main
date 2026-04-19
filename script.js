@@ -56,6 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ── Hamburger menu ──
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('navHamburger');
+    const mobileNav = document.getElementById('navMobile');
+    if (!hamburger || !mobileNav) return;
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+    // Close on link click
+    mobileNav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            mobileNav.classList.remove('open');
+        });
+    });
+});
+
 // ── Smooth scrolling ──
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
