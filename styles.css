@@ -417,7 +417,7 @@ body {
     display: flex; align-items: center; gap: 0.35rem;
 }
 
-.btn-source::before { content: '↗'; font-size: 0.8rem; }
+.btn-source::before { content: ''; font-size: 0.8rem; }
 .btn-source:hover { color: #ccc; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
 
 /* ── About ── */
