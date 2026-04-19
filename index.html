@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peak Games - Premium Gaming Experience</title>
+    <title>Peak Games - Free Browser Games</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
@@ -23,15 +24,13 @@
         </div>
     </nav>
 
+    <!-- ── Hero ── -->
     <header class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Peak Games</h1>
-            <p class="hero-subtitle">Free browser games, built with passion</p>
-            <div class="hero-cta">
-                <a href="games.html" class="btn-primary">Browse Games →</a>
-            </div>
-        </div>
         <div class="hero-bg">
+            <div class="grid-overlay"></div>
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
             <div class="particles">
                 <div class="particle"></div>
                 <div class="particle"></div>
@@ -41,43 +40,110 @@
                 <div class="particle"></div>
             </div>
         </div>
+        <div class="hero-content">
+            <div class="hero-badge">🎮 6 Games Available</div>
+            <h1 class="hero-title">Peak<br><span class="hero-title-accent">Games</span></h1>
+            <p class="hero-subtitle">Free browser games built with passion.<br>No downloads. No accounts. Just play.</p>
+            <div class="hero-actions">
+                <a href="games.html" class="btn-primary">Browse Games →</a>
+                <a href="#about" class="btn-ghost">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-scroll-hint">
+            <div class="scroll-line"></div>
+        </div>
     </header>
 
+    <!-- ── Game Previews Strip ── -->
+    <section class="games-strip">
+        <div class="container">
+            <div class="strip-header">
+                <h2>Our Games</h2>
+                <a href="games.html" class="strip-link">View All →</a>
+            </div>
+            <div class="strip-grid">
+                <a href="https://amongusman173-hub.github.io/PeakGames-Lucky/" target="_blank" class="strip-card">
+                    <img src="images/lucky.png" alt="Lucky">
+                    <div class="strip-card-info">
+                        <span class="strip-card-name">Lucky</span>
+                        <span class="strip-card-tag">Casino</span>
+                    </div>
+                </a>
+                <a href="https://amongusman173-hub.github.io/PeakGames-Fishin/" target="_blank" class="strip-card">
+                    <img src="images/fishing time.png" alt="Fishin Time">
+                    <div class="strip-card-info">
+                        <span class="strip-card-name">Fishin Time</span>
+                        <span class="strip-card-tag">Adventure</span>
+                    </div>
+                </a>
+                <a href="https://amongusman173-hub.github.io/PeakGames-Roguelite/" target="_blank" class="strip-card">
+                    <img src="images/rougelite arena.png" alt="Roguelite Arena">
+                    <div class="strip-card-info">
+                        <span class="strip-card-name">Roguelite Arena</span>
+                        <span class="strip-card-tag">Action</span>
+                    </div>
+                </a>
+                <a href="https://amongusman173-hub.github.io/PeakGames-TowerDefense/" target="_blank" class="strip-card">
+                    <img src="images/tower defense.png" alt="Tower Defense">
+                    <div class="strip-card-info">
+                        <span class="strip-card-name">Tower Defense</span>
+                        <span class="strip-card-tag">Strategy</span>
+                    </div>
+                </a>
+                <a href="https://amongusman173-hub.github.io/PeakGames-Incremental/" target="_blank" class="strip-card">
+                    <img src="images/incremental.png" alt="Untitled Incremental">
+                    <div class="strip-card-info">
+                        <span class="strip-card-name">Untitled Incremental</span>
+                        <span class="strip-card-tag">Idle</span>
+                    </div>
+                </a>
+                <a href="https://amongusman173-hub.github.io/PeakGames-MineField/" target="_blank" class="strip-card">
+                    <img src="images/MineField.png" alt="Minefield">
+                    <div class="strip-card-info">
+                        <span class="strip-card-name">Minefield</span>
+                        <span class="strip-card-tag">Survival</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── About ── -->
     <section id="about" class="about-section">
         <div class="container">
-            <div class="about-content">
-                <div class="about-grid">
-                    <div class="about-text">
-                        <h2>About Peak Games</h2>
-                        <p>We're passionate about creating engaging gaming experiences that push the boundaries of web-based entertainment. Our games combine innovative mechanics with polished design to deliver unforgettable experiences.</p>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-number">6</div>
-                                <div class="stat-label">Games Released</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">∞</div>
-                                <div class="stat-label">Hours of Fun</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">100%</div>
-                                <div class="stat-label">Free to Play</div>
-                            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <div class="about-label">About Us</div>
+                    <h2>Built for fun.<br>Free forever.</h2>
+                    <p>We make browser games that are easy to pick up and hard to put down. No installs, no paywalls — just open and play.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Games Released</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">Hours of Fun</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Free to Play</div>
                         </div>
                     </div>
-                    <div class="about-visual">
-                        <div class="floating-elements">
-                            <div class="floating-card">🎮</div>
-                            <div class="floating-card">🎲</div>
-                            <div class="floating-card">⚔️</div>
-                            <div class="floating-card">💎</div>
-                        </div>
+                </div>
+                <div class="about-visual">
+                    <div class="floating-elements">
+                        <div class="floating-card">🎮</div>
+                        <div class="floating-card">🎲</div>
+                        <div class="floating-card">⚔️</div>
+                        <div class="floating-card">💎</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ── Privacy ── -->
     <section id="privacy" class="privacy-section">
         <div class="container">
             <div class="privacy-content">
@@ -111,7 +177,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3>Peak Games</h3>
-                    <p>Premium Gaming Experience</p>
+                    <p>Free browser games</p>
                 </div>
                 <div class="footer-links">
                     <a href="games.html">Games</a>

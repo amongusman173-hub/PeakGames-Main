@@ -604,3 +604,214 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
     .category-btn { padding: 7px 13px; font-size: 0.8rem; }
     .search-results-info { flex-direction: column; gap: 0.6rem; text-align: center; }
 }
+
+/* ── Hero Rework ── */
+.hero {
+    height: 100vh; min-height: 700px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+}
+
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+
+/* Dot grid */
+.grid-overlay {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(102,126,234,0.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+.orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none;
+}
+
+.orb-1 {
+    width: 600px; height: 600px;
+    background: rgba(102,126,234,0.15);
+    top: -200px; left: -150px;
+    animation: orbDrift 14s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+    width: 500px; height: 500px;
+    background: rgba(192,132,252,0.12);
+    bottom: -150px; right: -100px;
+    animation: orbDrift 11s ease-in-out infinite alternate-reverse;
+}
+
+.orb-3 {
+    width: 300px; height: 300px;
+    background: rgba(118,75,162,0.1);
+    top: 40%; left: 60%;
+    animation: orbDrift 8s ease-in-out infinite alternate;
+}
+
+.hero-content {
+    text-align: center; z-index: 1; position: relative;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+}
+
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(102,126,234,0.1);
+    border: 1px solid rgba(102,126,234,0.25);
+    color: var(--violet); padding: 6px 16px; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em;
+    margin-bottom: 1.8rem;
+    animation: badgePop 0.6s ease 0.2s both;
+}
+
+@keyframes badgePop {
+    from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.hero-title {
+    font-size: 7rem; font-weight: 900; line-height: 0.95;
+    letter-spacing: -0.04em; margin-bottom: 1.5rem;
+    color: #fff;
+    animation: heroSlideUp 0.7s ease 0.3s both;
+}
+
+.hero-title-accent {
+    background: linear-gradient(135deg, #a78bfa 0%, #667eea 50%, #c084fc 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(102,126,234,0.4));
+    animation: titleGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes heroSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-subtitle {
+    font-size: 1.15rem; color: #555; font-weight: 400;
+    line-height: 1.7; margin-bottom: 2.5rem;
+    animation: heroSlideUp 0.7s ease 0.45s both;
+}
+
+.hero-actions {
+    display: flex; gap: 1rem; align-items: center;
+    animation: heroSlideUp 0.7s ease 0.6s both;
+}
+
+.btn-ghost {
+    padding: 15px 28px; color: #666; text-decoration: none;
+    font-weight: 500; font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 50px;
+    transition: all 0.25s ease;
+}
+
+.btn-ghost:hover { color: #fff; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+.hero-scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%); z-index: 1;
+    display: flex; flex-direction: column; align-items: center;
+}
+
+.scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, rgba(102,126,234,0.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%,100% { opacity: 0.3; transform: scaleY(1); }
+    50%      { opacity: 1; transform: scaleY(1.1); }
+}
+
+/* ── Games Strip ── */
+.games-strip {
+    padding: 80px 0;
+    background: var(--bg2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.strip-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2rem;
+}
+
+.strip-header h2 {
+    font-size: 1.6rem; font-weight: 700; color: #fff; letter-spacing: -0.02em;
+}
+
+.strip-link {
+    color: var(--violet); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.strip-link:hover { color: #fff; }
+
+.strip-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+}
+
+.strip-card {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    background: var(--card);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex; flex-direction: column;
+}
+
+.strip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(102,126,234,0.2);
+    border-color: rgba(102,126,234,0.2);
+}
+
+.strip-card img {
+    width: 100%; aspect-ratio: 16/10; object-fit: cover;
+    filter: brightness(0.85); transition: filter 0.25s ease;
+}
+
+.strip-card:hover img { filter: brightness(1); }
+
+.strip-card-info {
+    padding: 0.7rem 0.9rem;
+    display: flex; flex-direction: column; gap: 0.2rem;
+}
+
+.strip-card-name {
+    color: #ccc; font-size: 0.82rem; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.strip-card-tag {
+    color: #555; font-size: 0.72rem; font-weight: 500;
+}
+
+/* About label */
+.about-label {
+    display: inline-block;
+    color: var(--violet); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.about-text h2 {
+    font-size: 2.8rem; font-weight: 800; color: #fff;
+    letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.2rem;
+}
+
+/* Responsive strip */
+@media (max-width: 900px) {
+    .strip-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero-title { font-size: 5rem; }
+}
+
+@media (max-width: 640px) {
+    .strip-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-title { font-size: 3.5rem; }
+    .hero-actions { flex-direction: column; }
+}
