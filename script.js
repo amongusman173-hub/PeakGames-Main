@@ -371,6 +371,88 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ── Live Player Count ──
+// Uses localStorage with heartbeat — tracks real concurrent visitors across tabs
+const SESSION_ID = Math.random().toString(36).slice(2);
+const HEARTBEAT_INTERVAL = 8000; // 8s
+const SESSION_TIMEOUT = 20000;   // 20s — session considered dead
+
+let currentGame = null;
+
+function heartbeat() {
+    if (!currentGame) return;
+    const key = `players_${currentGame}`;
+    const sessions = JSON.parse(localStorage.getItem(key) || '{}');
+    sessions[SESSION_ID] = Date.now();
+    localStorage.setItem(key, JSON.stringify(sessions));
+}
+
+function clearSession() {
+    if (!currentGame) return;
+    const key = `players_${currentGame}`;
+    const sessions = JSON.parse(localStorage.getItem(key) || '{}');
+    delete sessions[SESSION_ID];
+    localStorage.setItem(key, JSON.stringify(sessions));
+}
+
+function getActivePlayers(game) {
+    const key = `players_${game}`;
+    const sessions = JSON.parse(localStorage.getItem(key) || '{}');
+    const now = Date.now();
+    // Clean stale sessions
+    let count = 0;
+    const fresh = {};
+    for (const [id, ts] of Object.entries(sessions)) {
+        if (now - ts < SESSION_TIMEOUT) { fresh[id] = ts; count++; }
+    }
+    localStorage.setItem(key, JSON.stringify(fresh));
+    return count;
+}
+
+function updatePlayerCounts() {
+    document.querySelectorAll('.player-count').forEach(el => {
+        const game = el.dataset.game;
+        const count = getActivePlayers(game);
+        if (count > 0) {
+            el.innerHTML = `<span class="player-dot"></span>${count} playing`;
+            el.style.display = 'inline-flex';
+        } else {
+            el.style.display = 'none';
+        }
+    });
+}
+
+// Start heartbeat when preview opens, stop when closed
+const _origToggle = window.togglePreview;
+window.togglePreview = function(event) {
+    _origToggle(event);
+    const gameCard = event.target.closest('.game-card');
+    const preview = gameCard.querySelector('.game-preview');
+    const game = preview.dataset.src
+        .replace('https://amongusman173-hub.github.io/PeakGames-','')
+        .replace('/','').toLowerCase()
+        .replace('minefield','minefield')
+        .replace('lucky','lucky')
+        .replace('fishin','fishin')
+        .replace('roguelite','roguelite')
+        .replace('towerdefense','towerdefense')
+        .replace('incremental','incremental');
+
+    if (preview.classList.contains('expanded')) {
+        clearSession();
+        currentGame = game;
+        heartbeat();
+    } else {
+        clearSession();
+        currentGame = null;
+    }
+};
+
+setInterval(heartbeat, HEARTBEAT_INTERVAL);
+setInterval(updatePlayerCounts, 3000);
+window.addEventListener('beforeunload', clearSession);
+document.addEventListener('DOMContentLoaded', updatePlayerCounts);
+
 // ── Render recently played on load ──
 document.addEventListener('DOMContentLoaded', renderRecentlyPlayed);
 document.addEventListener('DOMContentLoaded', () => {

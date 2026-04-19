@@ -1274,3 +1274,28 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
 .preview-thumb, .strip-card img, .featured-img, .recently-card img {
     background: #0c0c1a;
 }
+
+/* ── Live Player Count ── */
+.player-count {
+    display: none;
+    align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600;
+    color: #10b981; letter-spacing: 0.02em;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.2);
+    padding: 2px 8px; border-radius: 50px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.player-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #10b981;
+    animation: playerPulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes playerPulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.7); }
+}
