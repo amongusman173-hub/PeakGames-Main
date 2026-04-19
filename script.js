@@ -300,41 +300,6 @@ document.addEventListener('DOMContentLoaded', () => {
     filterGames();
 });
 
-// ── Confetti on Play Now ──
-function launchConfetti(x, y) {
-    const colors = ['#667eea','#a78bfa','#c084fc','#f59e0b','#10b981','#fff'];
-    for (let i = 0; i < 28; i++) {
-        const el = document.createElement('div');
-        el.className = 'confetti-piece';
-        el.style.cssText = `
-            left:${x}px; top:${y}px;
-            background:${colors[Math.floor(Math.random()*colors.length)]};
-            transform:rotate(${Math.random()*360}deg);
-            width:${6+Math.random()*6}px;
-            height:${6+Math.random()*6}px;
-            border-radius:${Math.random()>0.5?'50%':'2px'};
-        `;
-        document.body.appendChild(el);
-        const angle = (Math.random() * 360) * (Math.PI/180);
-        const dist = 80 + Math.random() * 120;
-        const tx = Math.cos(angle) * dist;
-        const ty = Math.sin(angle) * dist - 60;
-        el.animate([
-            { transform: `translate(0,0) rotate(0deg) scale(1)`, opacity: 1 },
-            { transform: `translate(${tx}px,${ty}px) rotate(${Math.random()*720}deg) scale(0)`, opacity: 0 }
-        ], { duration: 700 + Math.random()*400, easing: 'cubic-bezier(0,0.9,0.57,1)', fill: 'forwards' })
-        .onfinish = () => el.remove();
-    }
-}
-
-document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.btn-play, .btn-primary');
-    if (btn && btn.href) {
-        const rect = btn.getBoundingClientRect();
-        launchConfetti(rect.left + rect.width/2, rect.top + rect.height/2);
-    }
-});
-
 // ── Recently Played ──
 const GAMES_DATA = [
     { title: 'Lucky',               url: 'https://amongusman173-hub.github.io/PeakGames-Lucky/',         img: 'images/lucky.png',            tag: 'Casino' },

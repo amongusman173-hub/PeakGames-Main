@@ -1178,12 +1178,6 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
     box-shadow: 0 0 8px rgba(167,139,250,0.6);
 }
 
-/* ── Confetti ── */
-.confetti-piece {
-    position: fixed; pointer-events: none; z-index: 99999;
-    transform-origin: center;
-}
-
 /* ── Recently Played ── */
 .recently-played {
     margin-bottom: 2rem;
