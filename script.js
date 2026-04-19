@@ -148,6 +148,18 @@ window.addEventListener('scroll', () => {
         : 'rgba(7, 7, 15, 0.85)';
 });
 
+// ── Page loader ──
+document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('pageLoader');
+    if (!loader) return;
+
+    // Fill bar then sweep out
+    setTimeout(() => {
+        loader.classList.add('loader-done');
+        setTimeout(() => loader.remove(), 600);
+    }, 700);
+});
+
 // ── Search & filter ──
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('gameSearch');
@@ -164,12 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Staggered entrance animation on load
     gameCards.forEach((card, i) => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(28px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.transform = 'translateY(40px) scale(0.96)';
+        card.style.transition = 'none';
         setTimeout(() => {
+            card.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
             card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 80 + i * 80);
+            card.style.transform = 'translateY(0) scale(1)';
+        }, 120 + i * 100);
     });
 
     searchInput.addEventListener('input', (e) => {

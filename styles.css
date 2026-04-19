@@ -935,3 +935,57 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
 .game-preview {
     transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── Page Loader ── */
+.page-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.page-loader.loader-done {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+.page-loader-inner {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 1.5rem;
+}
+
+.page-loader-logo {
+    font-size: 2rem; font-weight: 900; letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #a78bfa, #667eea, #c084fc);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: loaderLogoPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes loaderLogoPulse {
+    from { filter: drop-shadow(0 0 10px rgba(102,126,234,0.3)); }
+    to   { filter: drop-shadow(0 0 30px rgba(167,139,250,0.7)); }
+}
+
+.page-loader-bar {
+    width: 180px; height: 2px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px; overflow: hidden;
+}
+
+.page-loader-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--violet));
+    border-radius: 2px;
+    animation: loaderFill 0.65s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+@keyframes loaderFill {
+    from { width: 0%; }
+    to   { width: 100%; }
+}
+
+/* Keep body hidden until loader is gone */
+.games-page, .navbar, .footer {
+    animation: none;
+}
