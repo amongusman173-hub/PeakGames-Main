@@ -308,7 +308,7 @@ const GAMES_DATA = [
     { title: 'Tower Defense',       url: 'https://amongusman173-hub.github.io/PeakGames-TowerDefense/', img: 'images/tower defense.png',    tag: 'Strategy' },
     { title: 'Untitled Incremental',url: 'https://amongusman173-hub.github.io/PeakGames-Incremental/',  img: 'images/incremental.png',      tag: 'Idle' },
     { title: 'Minefield',           url: 'https://amongusman173-hub.github.io/PeakGames-MineField/',    img: 'images/MineField.png',        tag: 'Action' },
-    { title: "Night's Siege",       url: 'https://amongusman173-hub.github.io/PeakGames-Nights-Siege/', img: 'images/nights siege.png',     tag: 'Action' },
+    { title: "Night's Siege",       url: 'https://amongusman173-hub.github.io/PeakGames-Nights-Siege/', img: 'images/Night Siege.png',      tag: 'Action' },
 ];
 
 function trackPlay(url) {
