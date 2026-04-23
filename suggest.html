@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggest a Game - Peak Games</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="nav-logo">Peak Games</a>
+            </div>
+            <div class="nav-links">
+                <a href="games.html">Games</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#privacy">Privacy</a>
+                <a href="suggest.html" class="nav-suggest active-suggest">💡 Suggest a Game</a>
+                <button class="music-toggle" id="musicToggle" title="Toggle Music">♪</button>
+            </div>
+            <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="nav-mobile" id="navMobile">
+            <a href="games.html">Games</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#privacy">Privacy</a>
+            <a href="suggest.html">💡 Suggest a Game</a>
+        </div>
+    </nav>
+
+    <section class="suggest-page">
+        <div class="container">
+            <div class="suggest-page-inner">
+
+                <div class="suggest-page-header">
+                    <div class="home-section-label">Community</div>
+                    <h1 class="suggest-page-title">Suggest a Game</h1>
+                    <p class="suggest-page-sub">Got an idea for a game you'd love to see on Peak Games? Tell us about it — and sketch it out if you want.</p>
+                </div>
+
+                <div class="suggest-page-form" id="suggestForm">
+                    <div class="suggest-form-grid">
+
+                        <div class="suggest-form-left">
+                            <div class="form-group">
+                                <label class="form-label" for="sgName">Game Name <span class="form-required">*</span></label>
+                                <input type="text" id="sgName" class="form-input" placeholder="e.g. Space Blaster" maxlength="60" autocomplete="off">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="sgCategory">Category <span class="form-required">*</span></label>
+                                <select id="sgCategory" class="form-input form-select">
+                                    <option value="">Select a category</option>
+                                    <option value="Action">Action</option>
+                                    <option value="Adventure">Adventure</option>
+                                    <option value="Casino">Casino</option>
+                                    <option value="Idle">Idle</option>
+                                    <option value="Puzzle">Puzzle</option>
+                                    <option value="Strategy">Strategy</option>
+                                    <option value="Survival">Survival</option>
+                                    <option value="Other">Other</option>
+                                    <option value="custom">✏️ Custom (type below)</option>
+                                </select>
+                                <input type="text" id="sgCategoryCustom" class="form-input" placeholder="Type your category..." maxlength="40" autocomplete="off" style="display:none;margin-top:0.5rem">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="sgDesc">Description <span class="form-required">*</span></label>
+                                <textarea id="sgDesc" class="form-input form-textarea" placeholder="What's the game about? What makes it fun? How would it play?" maxlength="300" rows="5"></textarea>
+                                <div class="form-hint"><span id="sgDescCount">0</span>/300</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="sgUrl">Existing Game URL <span class="form-muted">(optional)</span></label>
+                                <input type="url" id="sgUrl" class="form-input" placeholder="https://..." autocomplete="off">
+                                <div class="form-hint">Link to an existing game if you're suggesting we add it.</div>
+                            </div>
+
+                            <div class="suggest-spam-note">⏱ One suggestion per 24 hours to keep things fair.</div>
+                            <div class="suggest-error" id="suggestError"></div>
+
+                            <button class="btn-submit" id="suggestSubmit">Send Suggestion →</button>
+                        </div>
+
+                        <div class="suggest-form-right">
+                            <label class="form-label">Concept Sketch <span class="form-muted">(optional)</span></label>
+                            <p class="suggest-canvas-hint">Draw what the game might look like. Anything helps!</p>
+                            <div class="canvas-toolbar">
+                                <div class="canvas-colors">
+                                    <button class="canvas-color active" data-color="#a78bfa" style="background:#a78bfa" aria-label="Purple"></button>
+                                    <button class="canvas-color" data-color="#ffffff" style="background:#ffffff" aria-label="White"></button>
+                                    <button class="canvas-color" data-color="#10b981" style="background:#10b981" aria-label="Green"></button>
+                                    <button class="canvas-color" data-color="#f59e0b" style="background:#f59e0b" aria-label="Yellow"></button>
+                                    <button class="canvas-color" data-color="#ef4444" style="background:#ef4444" aria-label="Red"></button>
+                                    <button class="canvas-color" data-color="#60a5fa" style="background:#60a5fa" aria-label="Blue"></button>
+                                </div>
+                                <div class="canvas-sizes">
+                                    <button class="canvas-size active" data-size="3" aria-label="Small">S</button>
+                                    <button class="canvas-size" data-size="7" aria-label="Medium">M</button>
+                                    <button class="canvas-size" data-size="14" aria-label="Large">L</button>
+                                </div>
+                                <button class="canvas-eraser" id="canvasEraser">⌫ Erase</button>
+                                <button class="canvas-clear" id="canvasClear">Clear</button>
+                            </div>
+                            <canvas id="sketchCanvas" class="sketch-canvas sketch-canvas--large" aria-label="Drawing canvas"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="suggest-success" id="suggestSuccess" style="display:none">
+                    <div class="success-icon">🎉</div>
+                    <h2>Thanks for the suggestion!</h2>
+                    <p>We'll review it and consider it for a future game. You can suggest again in 24 hours.</p>
+                    <a href="games.html" class="btn-primary" style="margin-top:1.5rem;display:inline-flex">Browse Games →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Mod Panel Password Prompt -->
+    <div class="modal-backdrop" id="modAuthBackdrop">
+        <div class="modal mod-auth-modal" id="modAuthModal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <h2 class="modal-title">🔐 Moderation Panel</h2>
+                <button class="modal-close" id="modAuthClose" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="mod-auth-hint">Enter the password to continue.</p>
+                <input type="password" id="modPassword" class="form-input" placeholder="Password" autocomplete="off">
+                <div class="suggest-error" id="modAuthError"></div>
+                <button class="btn-submit" id="modAuthSubmit" style="margin-top:1rem">Unlock →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mod Panel -->
+    <div class="modal-backdrop" id="modPanelBackdrop">
+        <div class="modal mod-panel-modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-eyebrow">Admin</div>
+                    <h2 class="modal-title">Moderation Panel</h2>
+                </div>
+                <button class="modal-close" id="modPanelClose" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="mod-tabs">
+                    <button class="mod-tab active" data-tab="pending">Pending <span class="mod-tab-count" id="pendingCount">0</span></button>
+                    <button class="mod-tab" data-tab="accepted">Accepted <span class="mod-tab-count" id="acceptedCount">0</span></button>
+                    <button class="mod-tab" data-tab="tools">🛠 Tools</button>
+                </div>
+                <div id="modPending"><div class="mod-list" id="pendingList"><div class="mod-empty">No pending suggestions.</div></div></div>
+                <div id="modAccepted" style="display:none"><div class="mod-list" id="acceptedList"><div class="mod-empty">No accepted suggestions yet.</div></div></div>
+                <div id="modTools" style="display:none">
+                    <div class="mod-tools-section">
+                        <div class="mod-tools-title">Suggestion Cooldown</div>
+                        <p class="mod-tools-desc">Reset the 24-hour cooldown so this browser can submit a new suggestion immediately.</p>
+                        <div class="mod-tools-status" id="cooldownStatus"></div>
+                        <button class="mod-btn mod-btn-accept" id="resetCooldownBtn" style="padding:8px 18px;font-size:0.85rem">Reset Cooldown</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mod Detail -->
+    <div class="modal-backdrop" id="modDetailBackdrop">
+        <div class="modal mod-detail-modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modDetailTitle">Suggestion Detail</h2>
+                <button class="modal-close" id="modDetailClose" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="modDetailBody"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
