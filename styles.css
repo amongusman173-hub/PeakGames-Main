@@ -1799,6 +1799,67 @@ body.fade-out { animation: pageFadeOut 0.28s ease forwards; }
     padding: 10px 16px; font-size: 0.9rem;
 }
 
+/* ── Learn Coding button in navbar ── */
+.learn-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: #fff !important;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                background 0.35s ease,
+                box-shadow 0.35s ease,
+                transform 0.2s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    text-decoration: none;
+    position: relative;
+}
+
+.learn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    width: 18px;
+    height: 18px;
+    transition: none;
+}
+
+.learn-text {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: opacity 0.25s ease 0.1s, transform 0.25s ease 0.1s;
+    flex-shrink: 0;
+}
+
+.learn-toggle:hover {
+    width: 150px;
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 0 20px rgba(16,185,129,0.5);
+    transform: scale(1.02);
+}
+
+.learn-toggle:hover .learn-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Kill the underline animation inherited from .nav-links a */
+.nav-links .learn-toggle::after { display: none !important; }
+
 /* Remove old FAB styles */
 .suggest-fab { display: none; }
 
