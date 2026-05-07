@@ -309,6 +309,9 @@ const GAMES_DATA = [
     { title: 'Untitled Incremental',url: 'https://amongusman173-hub.github.io/PeakGames-Incremental/',  img: 'images/incremental.png',      tag: 'Idle' },
     { title: 'Minefield',           url: 'https://amongusman173-hub.github.io/PeakGames-MineField/',    img: 'images/MineField.png',        tag: 'Action' },
     { title: "Night's Siege",       url: 'https://amongusman173-hub.github.io/PeakGames-Nights-Siege/', img: 'images/Night Siege.png',      tag: 'Action' },
+    { title: 'Breach',              url: 'https://amongusman173-hub.github.io/PeakGames-Breach/',        img: 'images/Breach.png',           tag: 'Tactical' },
+    { title: 'Deadzone',            url: 'https://amongusman173-hub.github.io/PeakGames-Deadzone/',      img: 'images/Deadzone.png',         tag: 'Survival' },
+    { title: 'StonksRouge',         url: 'https://amongusman173-hub.github.io/PeakGames-StonksRouge/',  img: 'images/StonksRouge.png',      tag: 'Strategy' },
 ];
 
 function trackPlay(url) {
